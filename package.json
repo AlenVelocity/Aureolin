@@ -13,7 +13,8 @@
     "lint": "eslint \"src/**/*.ts\"",
     "prepare": "npm run build",
     "fmt": "prettier --config .prettierrc \"src/**/*.ts\" --write",
-    "test": "mocha --timeout 60000 -r ts-node/register \"tests/**/*.test.ts\""
+    "test": "mocha --timeout 60000 -r ts-node/register \"tests/**/*.test.ts\"",
+    "example": "ts-node example/main.ts"
   },
   "keywords": [
     "api",
@@ -35,6 +36,7 @@
     "@types/koa__router": "^8.0.8",
     "@types/mocha": "^9.0.0",
     "@types/node": "^16.4.13",
+    "@types/pino": "^6.3.11",
     "@typescript-eslint/eslint-plugin": "^4.29.1",
     "@typescript-eslint/parser": "^4.29.1",
     "eslint": "^7.32.0",
@@ -45,6 +47,8 @@
   },
   "dependencies": {
     "@koa/router": "^10.1.1",
-    "koa": "^2.13.3"
+    "koa": "^2.13.3",
+    "pino": "^6.13.3",
+    "pino-pretty": "^7.0.1"
   }
 }
