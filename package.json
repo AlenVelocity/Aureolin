@@ -12,8 +12,7 @@
     "doc": "typedoc",
     "lint": "eslint \"src/**/*.ts\"",
     "prepare": "npm run build",
-    "fmt": "prettier --config .prettierrc \"src/**/*.ts\" --write",
-    "test": "mocha --timeout 60000 -r ts-node/register \"tests/**/*.test.ts\"",
+    "fmt": "prettier --config .prettierrc \"**/*.ts\" --write",
     "example": "ts-node example/main.ts"
   },
   "keywords": [
