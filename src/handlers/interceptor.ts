@@ -11,9 +11,10 @@ export const handleInterceptor =
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const E = err as any
             const status = E.status || 500
-            context.res.status(status).send({
+            context.status = status
+            context.body = {
                 status,
-                message: E.message
-            })
+                message: E.message,
+            }
         }
     }

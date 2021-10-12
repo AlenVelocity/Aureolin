@@ -1,6 +1,6 @@
 import { ControllerDefinition, EndpointDefinition, Interceptor } from '../types'
 
-class EndpointStore {
+class EndpointStore implements Iterable<EndpointDefinition> {
     private readonly controllers = new Map<string, ControllerDefinition>()
     private readonly list = new Map<string, EndpointDefinition>()
 
@@ -23,6 +23,16 @@ class EndpointStore {
         const endpoint = this.list.get(key)
         if (endpoint) endpoint.interceptors.push(Interceptor)
         else throw new Error(`Endpoint ${key} not found`)
+    }
+
+    public *[Symbol.iterator](): Iterator<EndpointDefinition> {
+        for (const endpoint of this.list.values()) {
+            yield endpoint
+        }
+    }
+
+    public getController = (controller: string): ControllerDefinition | undefined => {
+        return this.controllers.get(controller)
     }
 }
 

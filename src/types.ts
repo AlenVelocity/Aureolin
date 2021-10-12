@@ -1,19 +1,17 @@
-import { Request, Response } from 'express'
+import EventEmitter from 'events'
+import Application from 'koa'
+import { AureolinApplication } from './AureolinApplication'
 
 export type Body = string | Record<string, unknown> | Buffer | Array<unknown> | null
 
 export type ResponseFunc = () => Body | Promise<Body>
 
-export interface Context {
-    req: Request
-    res: Response
-    state: Record<string, unknown>
-}
+export type Context = Application.ParameterizedContext
 export type Interceptor = (context: Context) => Promise<void> | void
 
 export interface EndpointDefinition {
     path: string
-    method: string
+    method: Methods
     propertyKey: string
     controller: string
     interceptors: Array<Interceptor>
@@ -26,9 +24,11 @@ export interface ControllerDefinition {
 
 export type Methods = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH' | 'HEAD' | 'OPTIONS'
 
-export interface Middleware {
+export interface AureolinMiddleware {
     use: (context: Context, next: () => Promise<void> | void) => Promise<void> | void
 }
+
+export type MiddlewareClass = new () => AureolinMiddleware
 
 export interface CreateOptions {
     port: number
@@ -36,4 +36,23 @@ export interface CreateOptions {
     middlewarePath?: string
     routesPath?: string
 }
-export { NextFunction } from 'express'
+
+export interface EventsMap {
+    'app.ready': AureolinApplication
+    'app.start': number
+    'load.controller': ControllerDefinition
+    'load.controllers.done': never
+    'load.middleware.done': never
+    'configure.middlewares': never
+    'configure.router': EndpointDefinition 
+    'configure.routers': never
+    'error': unknown
+}
+
+export interface AureolinEventEmitter extends EventEmitter {
+    on<K extends keyof EventsMap>(event: K, listener: (arg: EventsMap[K]) => void): this
+    off<K extends keyof EventsMap>(event: K, listener: (arg: EventsMap[K]) => void): this
+    removeallListeners<K extends keyof EventsMap>(event: K): this
+    emit<K extends keyof EventsMap>(event: K, arg?: EventsMap[K]): boolean
+}
+export { Next as NextFunction } from 'koa'
