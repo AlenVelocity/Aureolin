@@ -57,9 +57,11 @@ Decorators for all Http methods are provided
 The return value of the methods prefixed with an Http Decorator in a controller are sent as the response
 Response can be a string, number, object, array, or a Promise.
 
+Use the provided Parameter Decorators to let Aureolin to know what parameters pass to the to the controller methods.
+
 ```TS
 /** @filename controllers/hello.ts */
-import { Controller, Get } from 'aureolin'
+import { Controller, Context, Get, Ctx, Param } from 'aureolin'
 
 @Controller('/hello')
 export class HelloController {
@@ -69,12 +71,12 @@ export class HelloController {
     }
 
     @Get('/:name')
-    async helloName({ params: { name } }: Context) {
+    async helloName(@Ctx() { params: { name } }: Context) {
         return `Hello ${name}!`
     }
 
     @Get('/:name/:age')
-    async helloNameAge({ params: { name, age } }: Context) {
+    async helloNameAge(@Param('name') name: string, @Param('age') age: string) {
         return `Hello ${name}! You are Probably ${age} years old.`
     }    
 }
@@ -85,7 +87,7 @@ export class HelloController {
 Middlewares are functions that are called before the controller methods are called.
 
 The example middleware shown below will log the method and path to the console every time a request is made.
-
+First and only param of the `use` method is the context itslef (for now)
 ```TS
 /** @filename middlewares/logger.ts */
 import { Middleware, AureolinMiddleware } from 'aureolin'
