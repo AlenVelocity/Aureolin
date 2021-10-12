@@ -1,4 +1,4 @@
-<a href="https://imgbb.com/"><img src="https://i.ibb.co/h1gT27Q/Aureolin.png" alt="Aureolin" border="0">
+<a href="https://imgbb.com/"><img src="https://i.ibb.co/h1gT27Q/Aureolin.png" alt="Aureolin" border="0" align=center>
 
 <div align=center>
 
