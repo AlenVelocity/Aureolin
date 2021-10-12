@@ -13,7 +13,7 @@ export const handleRoute =
             context.status = status
             context.body = {
                 status,
-                message: E.message ?? 'Internal Server Error',
+                message: E.message ?? 'Internal Server Error'
             }
         }
     }

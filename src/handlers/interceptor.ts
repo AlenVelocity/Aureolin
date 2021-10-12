@@ -14,7 +14,7 @@ export const handleInterceptor =
             context.status = status
             context.body = {
                 status,
-                message: E.message,
+                message: E.message
             }
         }
     }

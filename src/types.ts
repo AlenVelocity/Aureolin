@@ -1,5 +1,6 @@
 import EventEmitter from 'events'
 import Application from 'koa'
+import { Logger } from 'pino'
 import { AureolinApplication } from './AureolinApplication'
 
 export type Body = string | Record<string, unknown> | Buffer | Array<unknown> | null
@@ -35,6 +36,7 @@ export interface CreateOptions {
     controllersPath?: string
     middlewarePath?: string
     routesPath?: string
+    logger?: Logger
 }
 
 export interface EventsMap {
@@ -44,9 +46,9 @@ export interface EventsMap {
     'load.controllers.done': never
     'load.middleware.done': never
     'configure.middlewares': never
-    'configure.router': EndpointDefinition 
+    'configure.router': EndpointDefinition
     'configure.routers': never
-    'error': unknown
+    error: unknown
 }
 
 export interface AureolinEventEmitter extends EventEmitter {

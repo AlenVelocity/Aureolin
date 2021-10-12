@@ -16,9 +16,6 @@ export const create = async (options: CreateOptions): Promise<AureolinApplicatio
 
 export default create
 
-
-export {
-    AureolinApplication
-}
+export { AureolinApplication }
 export * from './Decorators'
 export * from './types'
