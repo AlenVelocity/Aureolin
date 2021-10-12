@@ -31,8 +31,8 @@ import { create } from 'aureolin'
 // import create from 'aureolin'
 // const { create } from require('aureolin')
 
-const main = () => {
-    const app = create({
+const main = async () => {
+    const app = await create({
         port: 3000
     })
 }
@@ -54,7 +54,8 @@ To create a controller you need to import the `Controller` decorator from Aureol
 
 Decorators for all Http methods are provided
 
-The return value of the methods prefixed withe an Http Decorator in a controllers are sent as the response
+The return value of the methods prefixed with an Http Decorator in a controller are sent as the response
+Response can be a string, number, object, array, or a Promise.
 
 ```TS
 /** @filename controllers/hello.ts */
@@ -104,8 +105,8 @@ After you have created all the necessary controllers and middlewares and placed 
 
 import { create } from 'aureolin'
 
-const main = () => {
-    const app = create({
+const main = async () => {
+    const app = await create({
         port: 3000,
         controllersPath: 'controllers',
         middlewarePath: 'middlewares'
