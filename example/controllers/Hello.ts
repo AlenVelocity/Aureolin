@@ -1,5 +1,4 @@
-import { Context } from "koa";
-import { Controller, Get } from "../../src";
+import { Controller, Get, Context } from "../../src";
 
 @Controller('/hello')
 export default class Hello {
