@@ -11,7 +11,7 @@
     "build": "tsc -p .",
     "doc": "typedoc",
     "lint": "eslint \"src/**/*.ts\"",
-    "prepublish": "npm run build",
+    "prepare": "npm run build",
     "fmt": "prettier --config .prettierrc \"src/**/*.ts\" --write",
     "test": "mocha --timeout 60000 -r ts-node/register \"tests/**/*.test.ts\""
   },
