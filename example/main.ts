@@ -6,7 +6,7 @@ const main = async () => {
     const app = await create({
         port: 3000,
         controllersPath: path('controllers'),
-        middlewarePath: path('middleware'),
+        middlewarePath: path('middleware')
     })
     console.log('App Started')
     app.on('error', console.error)
