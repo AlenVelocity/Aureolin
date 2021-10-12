@@ -8,6 +8,8 @@
 
 </div>
 
+----
+### [Starter Project](https://github.com/AlenSaito1/Aureolin-starter)
 
 ## Installation
 
