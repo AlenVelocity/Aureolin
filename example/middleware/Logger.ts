@@ -1,5 +1,4 @@
-import { Context } from "koa";
-import { AureolinMiddleware, Middleware } from "../../src";
+import { AureolinMiddleware, Middleware, Context } from "../../src";
 
 @Middleware()
 export default class Logger implements AureolinMiddleware {
