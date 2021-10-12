@@ -1,14 +1,14 @@
 import Router from '@koa/router'
-import { existsSync, readdirSync } from 'fs'
+import { existsSync } from 'fs'
 import Application from 'koa'
 import { handleInterceptor } from './handlers/interceptor'
 import { handleRoute } from './handlers/route'
 import endpointStore from './store/endpoints'
 import middlewareStore from './store/middleware'
 import { CreateOptions, Methods } from './types'
-import { composeMiddlewares } from './utils'
+import { composeMiddlewares, readdirRecursive } from './utils'
 import Emitter from './Emitter'
-
+import logger, { Logger } from 'pino'
 
 export class AureolinApplication extends Emitter {
     private readonly server = new Application()
@@ -16,11 +16,22 @@ export class AureolinApplication extends Emitter {
     private readonly router = new Router()
     private readonly methods = new Map<Methods, Router['get']>()
 
+    public logger: Logger
     constructor(private options: CreateOptions) {
-        super();
+        super()
+        this.logger =
+            options.logger ||
+            logger({
+                prettyPrint: {
+                    colorize: true,
+                    ignore: 'pid,hostname',
+                    translateTime: 'yyyy-mm-dd HH:MM:ss.l'
+                }
+            })
         for (const method of ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'HEAD', 'OPTIONS']) {
             this.methods.set(method as Methods, this.router[method.toLowerCase() as 'get'])
         }
+        //prettier-ignore
         (async () => {
             await this.loadControllers()
             await this.loadMiddleware()
@@ -31,27 +42,32 @@ export class AureolinApplication extends Emitter {
     }
 
     public start = async (): Promise<void> => {
-        this.server.listen(this.options.port, () => this.emit('app.start', this.options.port))
+        this.server.listen(this.options.port, () => {
+            this.emit('app.start', this.options.port)
+            this.logger.info(`Server started on port ${this.options.port}`)
+        })
     }
 
     private loadControllers = async (): Promise<void> => {
         const controllersPath = this.options.controllersPath || './controllers'
         if (!existsSync(controllersPath)) return
-        for (const file of readdirSync(controllersPath)) {
-            if (!file.startsWith('_')) continue
-            await import(`${controllersPath}/${file}`)
+        const files = readdirRecursive(controllersPath)
+        for (const file of files) {
+            await import(file)
         }
         this.emit('load.controllers.done')
+        this.logger.info(`Loaded ${files.length} controllers`)
     }
 
     private loadMiddleware = async (): Promise<void> => {
         const middlewarePath = this.options.middlewarePath || './middleware'
         if (!existsSync(middlewarePath)) return
-        for (const file of readdirSync(middlewarePath)) {
-            if (!file.startsWith('_')) continue
-            await import(`${middlewarePath}/${file}`)
+        const files = readdirRecursive(middlewarePath)
+        for (const file of files) {
+            await import(file)
         }
         this.emit('load.middleware.done')
+        this.logger.info(`Loadded ${files.length} Middleware`)
     }
 
     private configureMiddlewares = (): void => {
@@ -67,12 +83,13 @@ export class AureolinApplication extends Emitter {
                     ctx.status = status
                     ctx.body = {
                         error: E.message || 'Internal Server Error',
-                        status,
+                        status
                     }
                 }
             })
         }
         this.emit('configure.middlewares')
+        this.logger.info('Configured Middlewares')
     }
 
     private configureRouters = (): void => {
@@ -95,6 +112,6 @@ export class AureolinApplication extends Emitter {
         this.server.use(this.router.routes())
         this.server.use(this.router.allowedMethods())
         this.emit('configure.routers')
+        this.logger.info('Configured Routers')
     }
-
 }
