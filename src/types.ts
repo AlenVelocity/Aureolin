@@ -18,6 +18,14 @@ export interface EndpointDefinition {
     interceptors: Array<Interceptor>
 }
 
+export interface ParameterDefinition {
+    type: string
+    controller: string
+    propertyKey: string
+    index: number
+    meta?: Record<string, string | undefined>
+}
+
 export interface ControllerDefinition {
     path: string
     target: unknown

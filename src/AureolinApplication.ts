@@ -105,7 +105,11 @@ export class AureolinApplication extends Emitter {
                 this.router,
                 path,
                 composeMiddlewares(...endpoint.interceptors.map(handleInterceptor)),
-                handleRoute((controller.target as Record<string, () => unknown>)[endpoint.propertyKey])
+                handleRoute(
+                    (controller.target as Record<string, () => unknown>)[endpoint.propertyKey],
+                    endpoint.controller,
+                    endpoint.propertyKey
+                )
             )
             this.emit('configure.router', endpoint)
         }
