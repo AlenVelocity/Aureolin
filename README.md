@@ -27,7 +27,7 @@ The `create` function takes an options object as its first and only argument.
 
 import { create } from 'aureolin'
 // import create from 'aureolin'
-// const { create } from 'aureolin'
+// const { create } from require('aureolin')
 
 const main = () => {
     const app = create({
