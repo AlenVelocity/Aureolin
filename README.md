@@ -1,6 +1,7 @@
-<a href="https://imgbb.com/"><img src="https://i.ibb.co/h1gT27Q/Aureolin.png" alt="Aureolin" border="0" align=center>
-
 <div align=center>
+<a href="https://imgbb.com/"><img src="https://i.ibb.co/h1gT27Q/Aureolin.png" alt="Aureolin" border="0" >
+
+
 
 # Aureolin
 **Aureolin** is a simple, fast, and powerful REST API framework for Node.js with a focus on simplicity and performance.
