@@ -1,12 +1,11 @@
 import Router from '@koa/router'
 import { existsSync } from 'fs'
 import Application from 'koa'
-import { handleInterceptor } from './handlers/interceptor'
 import { handleRoute } from './handlers/route'
 import endpointStore from './store/endpoints'
 import middlewareStore from './store/middleware'
 import { CreateOptions, Methods } from './types'
-import { composeMiddlewares, readdirRecursive } from './utils'
+import { readdirRecursive } from './utils'
 import Emitter from './Emitter'
 import logger, { Logger } from 'pino'
 
@@ -74,6 +73,7 @@ export class AureolinApplication extends Emitter {
         for (const Middleware of middlewareStore) {
             this.server.use(async (ctx, next) => {
                 try {
+                    this.logger.info(`Req: ${ctx.method} ${ctx.path}`)
                     await new Middleware().use(ctx, next)
                     await next()
                 } catch (error) {
@@ -104,7 +104,6 @@ export class AureolinApplication extends Emitter {
             router.call(
                 this.router,
                 path,
-                composeMiddlewares(...endpoint.interceptors.map(handleInterceptor)),
                 handleRoute(
                     (controller.target as Record<string, () => unknown>)[endpoint.propertyKey],
                     endpoint.controller,

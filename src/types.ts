@@ -15,7 +15,6 @@ export interface EndpointDefinition {
     method: Methods
     propertyKey: string
     controller: string
-    interceptors: Array<Interceptor>
 }
 
 export interface ParameterDefinition {

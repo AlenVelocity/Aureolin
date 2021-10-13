@@ -19,8 +19,6 @@ export const handleRoute = (
             const res = await cb(...args)
             if (res) context.body = res
         } catch (err) {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            console.error(err)
             const E = err as Error & { status?: number }
             const status = E.status ?? 500
             context.status = status

@@ -8,8 +8,7 @@ export const Get = (path: string): MethodDecorator => {
             path,
             propertyKey: propertyKey.toString(),
             method: 'GET',
-            controller: target.constructor.name,
-            interceptors: []
+            controller: target.constructor.name
         })
     }
 }
@@ -20,8 +19,7 @@ export const Post = (path: string): MethodDecorator => {
             path,
             propertyKey: propertyKey.toString(),
             method: 'POST',
-            controller: target.constructor.name,
-            interceptors: []
+            controller: target.constructor.name
         })
     }
 }
@@ -32,8 +30,7 @@ export const Put = (path: string): MethodDecorator => {
             path,
             propertyKey: propertyKey.toString(),
             method: 'PUT',
-            controller: target.constructor.name,
-            interceptors: []
+            controller: target.constructor.name
         })
     }
 }
@@ -44,8 +41,7 @@ export const Delete = (path: string): MethodDecorator => {
             path,
             propertyKey: propertyKey.toString(),
             method: 'DELETE',
-            controller: target.constructor.name,
-            interceptors: []
+            controller: target.constructor.name
         })
     }
 }
@@ -56,8 +52,7 @@ export const Patch = (path: string): MethodDecorator => {
             path,
             propertyKey: propertyKey.toString(),
             method: 'PATCH',
-            controller: target.constructor.name,
-            interceptors: []
+            controller: target.constructor.name
         })
     }
 }
@@ -68,8 +63,7 @@ export const Head = (path: string): MethodDecorator => {
             path,
             propertyKey: propertyKey.toString(),
             method: 'HEAD',
-            controller: target.constructor.name,
-            interceptors: []
+            controller: target.constructor.name
         })
     }
 }

@@ -1,4 +1,4 @@
-import { ControllerDefinition, EndpointDefinition, Interceptor } from '../types'
+import { ControllerDefinition, EndpointDefinition } from '../types'
 
 class EndpointStore implements Iterable<EndpointDefinition> {
     private readonly controllers = new Map<string, ControllerDefinition>()
@@ -6,7 +6,6 @@ class EndpointStore implements Iterable<EndpointDefinition> {
 
     public registerEndpoint = (definition: EndpointDefinition) => {
         const key = `${definition.controller}-${definition.propertyKey}`
-        definition.interceptors = definition.interceptors || []
         this.list.set(key, definition)
     }
 
@@ -16,13 +15,6 @@ class EndpointStore implements Iterable<EndpointDefinition> {
             path,
             target
         })
-    }
-
-    public registerInterceptor = (controller: string, propertyKey: string, Interceptor: Interceptor) => {
-        const key = `${controller}-${propertyKey}`
-        const endpoint = this.list.get(key)
-        if (endpoint) endpoint.interceptors.push(Interceptor)
-        else throw new Error(`Endpoint ${key} not found`)
     }
 
     public *[Symbol.iterator](): Iterator<EndpointDefinition> {
