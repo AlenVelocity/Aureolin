@@ -3,6 +3,9 @@
 # Aureolin
 **Aureolin** is a simple, fast, and powerful REST API framework for Node.js with a focus on simplicity and performance.
 
+[![NPM](https://img.shields.io/npm/l/aureolin?style=flat-square)](https://github.com/AlenSaito1/Aureolin/blob/master/LICENSE)  [![CodeFactor](https://img.shields.io/codefactor/grade/github/alensaito1/aureolin?style=flat-square)](https://www.codefactor.io/repository/github/alensaito1/aureolin) [![NPM](https://img.shields.io/npm/dw/aureolin?style=flat-square)](https://npmjs.com/package/aureolin)
+
+
 </div>
 
 ----
