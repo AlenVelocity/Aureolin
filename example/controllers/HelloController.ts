@@ -1,7 +1,7 @@
 import { Controller, Get, Context, Ctx, Param } from '../../src'
 
 @Controller('/hello')
-export default class Hello {
+export default class HelloController {
     @Get('/')
     public index(): string {
         return '/'

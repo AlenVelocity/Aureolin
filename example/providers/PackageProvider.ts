@@ -1,7 +1,7 @@
 import { Provider } from '../../src'
 
 @Provider('package')
-export default class Package {
+export default class PackageProvider {
     constructor() {}
 
     public get = async () => {

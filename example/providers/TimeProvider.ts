@@ -1,7 +1,7 @@
 import { Provider } from '../../src'
 
 @Provider('time')
-export default class Time {
+export default class TimeProvider {
     constructor() {}
 
     public get = (): string => {

@@ -1,10 +1,10 @@
 import { Controller, Get, Inject } from '../../src'
-import type Package from '../providers/Package'
-import type Time from '../providers/Time'
+import type PackageProvider from '../providers/PackageProvider'
+import type TimeProvider from '../providers/TimeProvider'
 
 @Controller('/')
-export default class Index {
-    constructor(@Inject('time') public tm: Time, @Inject('package') public pkg: Package) {}
+export default class HomeController {
+    constructor(@Inject('time') public tm: TimeProvider, @Inject('package') public pkg: PackageProvider) {}
 
     @Get('/')
     public index(): string {

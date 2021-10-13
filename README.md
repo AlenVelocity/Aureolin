@@ -33,7 +33,8 @@ import { create } from 'aureolin'
 
 const main = async () => {
     const app = await create({
-        port: 3000
+        port: 3000,
+        root: __dirname
     })
 }
 ```
@@ -43,8 +44,7 @@ Option Schema is as follows
 ```TS
 interface CreateOptions {
     port: number // port to listen on
-    controllersPath?: string // dir where controllers are located
-    middlewarePath?: string // dir where middleware are located
+    root: string // root directory where providers, middleware, and controllers are located
     logger?: Logger // Pino Logger
 }
 ```
@@ -113,7 +113,7 @@ export class TimeController {
 
     @Get('/')
     async getTime() {
-        return time.getTime()
+        return timeProvider.getTime()
     }
 }
 ```
@@ -146,8 +146,7 @@ import { create } from 'aureolin'
 const main = async () => {
     const app = await create({
         port: 3000,
-        controllersPath: 'controllers',
-        middlewarePath: 'middlewares'
+        root: __dirname
     })
 }
 
