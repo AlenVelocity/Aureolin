@@ -42,7 +42,7 @@ export class AureolinApplication extends Emitter {
         })()
     }
 
-    private path = (path: string) => this.options.root ? this.options.root.concat('/', path) : path
+    private path = (path: string) => (this.options.root ? this.options.root.concat('/', path) : path)
 
     public start = async (): Promise<void> => {
         this.server.listen(this.options.port, () => {
