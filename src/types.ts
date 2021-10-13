@@ -38,10 +38,22 @@ export interface AureolinMiddleware {
 
 export type MiddlewareClass = new () => AureolinMiddleware
 
+export interface IProvider {
+    provide: string
+    target: new () => unknown
+}
+
+export interface IInject {
+    provide: string
+    controller: string
+    index: number
+}
+
 export interface CreateOptions {
     port: number
     controllersPath?: string
     middlewarePath?: string
+    providersPath?: string
     routesPath?: string
     logger?: Logger
 }
@@ -52,6 +64,7 @@ export interface EventsMap {
     'load.controller': ControllerDefinition
     'load.controllers.done': never
     'load.middleware.done': never
+    'load.providers.done': never
     'configure.middlewares': never
     'configure.router': EndpointDefinition
     'configure.routers': never

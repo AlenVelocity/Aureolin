@@ -32,6 +32,7 @@ export class AureolinApplication extends Emitter {
         }
         //prettier-ignore
         (async () => {
+            await this.loadProviders()
             await this.loadControllers()
             await this.loadMiddleware()
             this.configureMiddlewares()
@@ -45,6 +46,17 @@ export class AureolinApplication extends Emitter {
             this.emit('app.start', this.options.port)
             this.logger.info(`Server started on port ${this.options.port}`)
         })
+    }
+
+    private loadProviders = async (): Promise<void> => {
+        const providersPath = this.options.providersPath
+        if (!providersPath) return
+        const providers = readdirRecursive(providersPath)
+        for (const provider of providers) {
+            await import(provider)
+        }
+        this.emit('load.providers.done')
+        this.logger.info(`Loaded ${providers.length} Providers`)
     }
 
     private loadControllers = async (): Promise<void> => {
@@ -105,7 +117,7 @@ export class AureolinApplication extends Emitter {
                 this.router,
                 path,
                 handleRoute(
-                    (controller.target as Record<string, () => unknown>)[endpoint.propertyKey],
+                    (controller.target as Record<string, () => unknown>)[endpoint.propertyKey].bind(controller.target),
                     endpoint.controller,
                     endpoint.propertyKey
                 )
