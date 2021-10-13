@@ -12,6 +12,7 @@
     "lint": "eslint \"src/**/*.ts\"",
     "prepare": "npm run build",
     "fmt": "prettier --config .prettierrc \"**/*.ts\" --write",
+    "test": "mocha -r ts-node/register \"tests/**/*.test.ts\" --exit",
     "example": "ts-node example/main.ts"
   },
   "keywords": [
@@ -51,6 +52,7 @@
   },
   "dependencies": {
     "@koa/router": "^10.1.1",
+    "axios": "^0.23.0",
     "koa": "^2.13.3",
     "pino": "^6.13.3",
     "pino-pretty": "^7.0.1"
