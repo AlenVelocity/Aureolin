@@ -1,10 +1,10 @@
-import { Controller, Get, Context, Ctx, Param, Query } from '../../src'
+import { Controller, Get, Context, Ctx, Param } from '../../src'
 
 @Controller('/hello')
 export default class Hello {
     @Get('/')
     public index(): string {
-        return 'Hello World!'
+        return '/'
     }
 
     @Get('/:name')
