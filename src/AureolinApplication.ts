@@ -16,6 +16,7 @@ export class AureolinApplication extends Emitter {
     private readonly methods = new Map<Methods, Router['get']>()
 
     public logger: Logger
+
     constructor(private options: CreateOptions) {
         super()
         this.logger =
@@ -41,6 +42,8 @@ export class AureolinApplication extends Emitter {
         })()
     }
 
+    private path = (path: string) => this.options.root ? this.options.root.concat('/', path) : path
+
     public start = async (): Promise<void> => {
         this.server.listen(this.options.port, () => {
             this.emit('app.start', this.options.port)
@@ -49,7 +52,7 @@ export class AureolinApplication extends Emitter {
     }
 
     private loadProviders = async (): Promise<void> => {
-        const providersPath = this.options.providersPath
+        const providersPath = this.path('providers')
         if (!providersPath) return
         const providers = readdirRecursive(providersPath)
         for (const provider of providers) {
@@ -60,7 +63,7 @@ export class AureolinApplication extends Emitter {
     }
 
     private loadControllers = async (): Promise<void> => {
-        const controllersPath = this.options.controllersPath || './controllers'
+        const controllersPath = this.path('controllers')
         if (!existsSync(controllersPath)) return
         const files = readdirRecursive(controllersPath)
         for (const file of files) {
@@ -71,7 +74,7 @@ export class AureolinApplication extends Emitter {
     }
 
     private loadMiddleware = async (): Promise<void> => {
-        const middlewarePath = this.options.middlewarePath || './middleware'
+        const middlewarePath = this.path('middleware')
         if (!existsSync(middlewarePath)) return
         const files = readdirRecursive(middlewarePath)
         for (const file of files) {

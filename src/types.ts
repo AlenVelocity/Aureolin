@@ -51,10 +51,7 @@ export interface IInject {
 
 export interface CreateOptions {
     port: number
-    controllersPath?: string
-    middlewarePath?: string
-    providersPath?: string
-    routesPath?: string
+    root?: string
     logger?: Logger
 }
 
