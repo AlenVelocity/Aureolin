@@ -17,7 +17,13 @@
   "keywords": [
     "api",
     "rest",
-    "express"
+    "koa",
+    "server",
+    "decorators",
+    "typescript",
+    "typescript-node",
+    "typescript-node-api",
+    "typescript-node-rest-api"
   ],
   "author": {
     "name": "Alen Yohannan",
