@@ -6,8 +6,8 @@ import { CreateOptions } from './types'
  * @param {CreateOptions} options
  * @returns {AureolinApplication} the application
  */
-export const create = async (options: CreateOptions): Promise<AureolinApplication> => {
-    return await new Promise((resolve) => {
+export const create = (options: CreateOptions): Promise<AureolinApplication> => {
+    return new Promise((resolve) => {
         new AureolinApplication(options).on('app.ready', (app) => {
             app.on('app.start', () => {
                 app.removeAllListeners('app.start')
