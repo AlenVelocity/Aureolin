@@ -39,3 +39,14 @@ export const Param = (param?: string): ParameterDecorator => {
         })
     }
 }
+
+export const Body = (): ParameterDecorator => {
+    return (controller: any, key: string | symbol, index: number): void => {
+        paramStore.register({
+            controller: controller.constructor.name,
+            propertyKey: key.toString(),
+            index,
+            type: 'body'
+        })
+    }
+}
