@@ -3,9 +3,9 @@ import Application from 'koa'
 import { Logger } from 'pino'
 import { AureolinApplication } from './AureolinApplication'
 
-export type Body = string | Record<string, unknown> | Buffer | Array<unknown> | null
+export type ResBody = string | Record<string, unknown> | Buffer | Array<unknown> | null
 
-export type ResponseFunc = () => Body | Promise<Body>
+export type ResponseFunc = () => ResBody | Promise<ResBody>
 
 export type Context = Application.ParameterizedContext
 export type Interceptor = (context: Context) => Promise<void> | void
