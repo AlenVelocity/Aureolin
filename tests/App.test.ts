@@ -9,14 +9,14 @@ describe('Aureolin', () => {
 
     it('should fetch', async () => {
         const response = await axios.get('http://localhost:3000')
-        assert.equal(response.status, 200)
-        assert.equal(response.data, 'Welcome to Aureolin!')
+        assert.strictEqual(response.status, 200)
+        assert.strictEqual(response.data, 'Welcome to Aureolin!')
     })
 
     it('should fetch name and age', async () => {
         const response = await axios.get('http://localhost:3000/hello/Aureolin/1')
-        assert.equal(response.status, 200)
-        assert.equal(response.data, "Hello Aureolin, You're Probably 1 years old!")
+        assert.strictEqual(response.status, 200)
+        assert.strictEqual(response.data, "Hello Aureolin, You're Probably 1 years old!")
     })
 
     it('should return the post body', async () => {
@@ -25,8 +25,7 @@ describe('Aureolin', () => {
             no: 'you'
         }
         const response = await axios.post<{ body: typeof body }>('http://localhost:3000/post/', body)
-        console.log(response.data)
-        assert.equal(response.status, 200)
-        assert.deepEqual(response.data.body, body)
+        assert.strictEqual(response.status, 200)
+        assert.deepStrictEqual(response.data.body, body)
     })
 })
