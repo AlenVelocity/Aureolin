@@ -8,6 +8,7 @@ import { CreateOptions, Methods } from './types'
 import { readdirRecursive } from './utils'
 import Emitter from './Emitter'
 import logger, { Logger } from 'pino'
+import bodyParser from 'koa-bodyparser'
 
 export class AureolinApplication extends Emitter {
     private readonly server = new Application()
@@ -85,10 +86,18 @@ export class AureolinApplication extends Emitter {
     }
 
     private configureMiddlewares = (): void => {
+        this.server.use(async (ctx, next) => {
+            this.logger.info(`REQUEST: ${ctx.method} ${ctx.url}`)
+            await next()
+        })
+        this.server.use(
+            bodyParser({
+                enableTypes: ['json', 'form', 'text']
+            })
+        )
         for (const Middleware of middlewareStore) {
             this.server.use(async (ctx, next) => {
                 try {
-                    this.logger.info(`Req: ${ctx.method} ${ctx.path}`)
                     await new Middleware().use(ctx, next)
                     await next()
                 } catch (error) {
