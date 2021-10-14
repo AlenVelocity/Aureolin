@@ -39,6 +39,7 @@
   "devDependencies": {
     "@types/koa": "^2.13.4",
     "@types/koa__router": "^8.0.8",
+    "@types/koa-bodyparser": "^4.3.3",
     "@types/mocha": "^9.0.0",
     "@types/node": "^16.4.13",
     "@types/pino": "^6.3.11",
@@ -54,6 +55,7 @@
     "@koa/router": "^10.1.1",
     "axios": "^0.23.0",
     "koa": "^2.13.3",
+    "koa-bodyparser": "^4.3.0",
     "pino": "^6.13.3",
     "pino-pretty": "^7.0.1"
   }
