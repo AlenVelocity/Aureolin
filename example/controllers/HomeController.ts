@@ -1,4 +1,4 @@
-import { Controller, Get, Inject } from '../../src'
+import { Body, Controller, Get, Inject, Post } from '../../src'
 import type PackageProvider from '../providers/PackageProvider'
 import type TimeProvider from '../providers/TimeProvider'
 
@@ -34,9 +34,17 @@ export default class HomeController {
             '/about': 'About Aureolin',
             '/time': 'Current time',
             '/routes': 'Routes',
+            '/post': 'Displays the request body',
             '/hello/': 'Hello',
             '/hello/:name': 'Hello {name}',
             '/hello/:name/:age': 'Hello {name} {age}'
+        }
+    }
+
+    @Post('post')
+    public test(@Body() body: Record<string, unknown>): typeof body {
+        return {
+            body: body
         }
     }
 }
