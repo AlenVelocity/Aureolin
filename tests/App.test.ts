@@ -18,4 +18,15 @@ describe('Aureolin', () => {
         assert.equal(response.status, 200)
         assert.equal(response.data, "Hello Aureolin, You're Probably 1 years old!")
     })
+
+    it('should return the post body', async () => {
+        const body = {
+            name: 'Zelda',
+            no: 'you'
+        }
+        const response = await axios.post<{ body: typeof body }>('http://localhost:3000/post/', body)
+        console.log(response.data)
+        assert.equal(response.status, 200)
+        assert.deepEqual(response.data.body, body)
+    })
 })
