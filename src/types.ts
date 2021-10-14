@@ -5,7 +5,7 @@ import { AureolinApplication } from './AureolinApplication'
 
 /**
  * Response body
- * @example 
+ * @example
  * ```json
  * {
  *      "status": "success",
@@ -44,7 +44,7 @@ export interface EndpointDefinition {
      * Path of the endpoint
      * @type {string}
      * @example '/hello'
-     * @public 
+     * @public
      */
     path: string
     /**
@@ -77,7 +77,7 @@ export interface ParameterDefinition {
      * @type {string}
      * @example 'ctx'
      * @public
-    */
+     */
     type: string
     /**
      * Controller Class
@@ -102,7 +102,7 @@ export interface ParameterDefinition {
     /**
      * Metadata
      * @type {Record<string, string | undefined>}
-     * @example 
+     * @example
      * ```json
      * {
      *     "query": "name"
@@ -138,7 +138,7 @@ export interface ControllerDefinition {
      *      }
      * }
      * ```
-    */
+     */
     target: unknown
 }
 
@@ -148,7 +148,7 @@ export interface ControllerDefinition {
 export type Methods = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH' | 'HEAD' | 'OPTIONS'
 
 /**
- * Middleware 
+ * Middleware
  */
 export interface AureolinMiddleware {
     /**
@@ -173,7 +173,7 @@ export interface AureolinMiddleware {
  * @example
  * ```ts
  * export class MyMiddleware implements AureolinMiddleware {
- *     public use = async (ctx: Context) => {   
+ *     public use = async (ctx: Context) => {
  *        ctx.body = 'Hello World'
  *    }
  * }
