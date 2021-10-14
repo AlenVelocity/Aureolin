@@ -1,6 +1,11 @@
 import { AureolinApplication } from './AureolinApplication'
 import { CreateOptions } from './types'
 
+/**
+ * create a new Aureolin application
+ * @param {CreateOptions} options
+ * @returns {AureolinApplication} the application
+ */
 export const create = async (options: CreateOptions): Promise<AureolinApplication> => {
     return await new Promise((resolve) => {
         new AureolinApplication(options).on('app.ready', (app) => {

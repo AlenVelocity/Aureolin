@@ -2,6 +2,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import endpointStore from '../store/endpoints'
 
+/**
+ * Sets the suffixed method to be called for 'GET' requests made to the endpoint.
+ * @param {string} path The endpoint to use
+ * @returns {MethodDecorator}
+ */
 export const Get = (path: string): MethodDecorator => {
     return (target: any, propertyKey: string | symbol, _descriptor: PropertyDescriptor): void => {
         endpointStore.registerEndpoint({
@@ -13,6 +18,11 @@ export const Get = (path: string): MethodDecorator => {
     }
 }
 
+/**
+ * Sets the suffixed method to be called for 'POST' requests made to the endpoint.
+ * @param {string} path The endpoint to use
+ * @returns {MethodDecorator}
+ */
 export const Post = (path: string): MethodDecorator => {
     return (target: any, propertyKey: string | symbol, _descriptor: PropertyDescriptor): void => {
         endpointStore.registerEndpoint({
@@ -24,6 +34,11 @@ export const Post = (path: string): MethodDecorator => {
     }
 }
 
+/**
+ * Sets the suffixed method to be called for 'PUT' requests made to the endpoint.
+ * @param {string} path The endpoint to use
+ * @returns {MethodDecorator}
+ */
 export const Put = (path: string): MethodDecorator => {
     return (target: any, propertyKey: string | symbol, _descriptor: PropertyDescriptor): void => {
         endpointStore.registerEndpoint({
@@ -35,6 +50,11 @@ export const Put = (path: string): MethodDecorator => {
     }
 }
 
+/**
+ * Sets the suffixed method to be called for 'DELETE' requests made to the endpoint.
+ * @param {string} path The endpoint to use
+ * @returns {MethodDecorator}
+ */
 export const Delete = (path: string): MethodDecorator => {
     return (target: any, propertyKey: string | symbol, _descriptor: PropertyDescriptor): void => {
         endpointStore.registerEndpoint({
@@ -46,6 +66,11 @@ export const Delete = (path: string): MethodDecorator => {
     }
 }
 
+/**
+ * Sets the suffixed method to be called for 'PATCH' requests made to the endpoint.
+ * @param {string} path The endpoint to use
+ * @returns {MethodDecorator}
+ */
 export const Patch = (path: string): MethodDecorator => {
     return (target: any, propertyKey: string | symbol, _descriptor: PropertyDescriptor): void => {
         endpointStore.registerEndpoint({
@@ -57,6 +82,11 @@ export const Patch = (path: string): MethodDecorator => {
     }
 }
 
+/**
+ * Sets the suffixed method to be called for 'HEAD' requests made to the endpoint.
+ * @param {string} path The endpoint to use
+ * @returns {MethodDecorator}
+ */
 export const Head = (path: string): MethodDecorator => {
     return (target: any, propertyKey: string | symbol, _descriptor: PropertyDescriptor): void => {
         endpointStore.registerEndpoint({

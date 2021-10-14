@@ -10,14 +10,54 @@ import Emitter from './Emitter'
 import logger, { Logger } from 'pino'
 import bodyParser from 'koa-bodyparser'
 
+/**
+ * The Aureolin Application class.
+ * @class
+ * @extends Emitter
+ */
 export class AureolinApplication extends Emitter {
+    /**
+     * Koa Application Instace which acts as the base http server
+     * @type {Application}
+     * @memberof AureolinApplication
+     * @private
+     * @readonly
+     */
     private readonly server = new Application()
 
+    /**
+     * Koa Router Instance
+     * @type {Router}
+     * @memberof AureolinApplication
+     * @private
+     * @readonly
+     */
     private readonly router = new Router()
+
+    /**
+     * Http-Methods - Router Map
+     * @type {Map<Methods, Router>}
+     * @memberof AureolinApplication
+     * @private
+     * @readonly
+     */
     private readonly methods = new Map<Methods, Router['get']>()
 
+    /**
+     * Pino Logger
+     * @type {Logger}
+     * @memberof AureolinApplication
+     * @private
+     * @readonly
+     */
     public logger: Logger
 
+    /**
+     * Aureolin Application Constructor
+     * @param {CreateOptions} options - Options to create the application
+     * @memberof AureolinApplication
+     * @constructor
+     */
     constructor(private options: CreateOptions) {
         super()
         this.logger =
@@ -43,8 +83,20 @@ export class AureolinApplication extends Emitter {
         })()
     }
 
+    /**
+     * Get the path prefixed with the root directory
+     * @param {string} path - Path to be prefixed
+     * @returns {string} dir - Path prefixed with the root directory
+     */
     private path = (path: string) => (this.options.root ? this.options.root.concat('/', path) : path)
 
+    /**
+     * Starts the application
+     * @memberof AureolinApplication
+     * @returns {Promise<void>}
+     * @public
+     * @async
+     */
     public start = async (): Promise<void> => {
         this.server.listen(this.options.port, () => {
             this.emit('app.start', this.options.port)
@@ -52,6 +104,13 @@ export class AureolinApplication extends Emitter {
         })
     }
 
+    /**
+     * Loads the providers
+     * @memberof AureolinApplication
+     * @returns {Promise<void>}
+     * @private
+     * @async
+     */
     private loadProviders = async (): Promise<void> => {
         const providersPath = this.path('providers')
         if (!providersPath) return
@@ -63,6 +122,13 @@ export class AureolinApplication extends Emitter {
         this.logger.info(`Loaded ${providers.length} Providers`)
     }
 
+    /**
+     * Loads the controllers
+     * @memberof AureolinApplication
+     * @returns {Promise<void>}
+     * @private
+     * @async
+     */
     private loadControllers = async (): Promise<void> => {
         const controllersPath = this.path('controllers')
         if (!existsSync(controllersPath)) return
@@ -74,6 +140,13 @@ export class AureolinApplication extends Emitter {
         this.logger.info(`Loaded ${files.length} controllers`)
     }
 
+    /**
+     * Loads the middleware
+     * @memberof AureolinApplication
+     * @returns {Promise<void>}
+     * @private
+     * @async
+     */
     private loadMiddleware = async (): Promise<void> => {
         const middlewarePath = this.path('middleware')
         if (!existsSync(middlewarePath)) return
@@ -85,6 +158,12 @@ export class AureolinApplication extends Emitter {
         this.logger.info(`Loadded ${files.length} Middleware`)
     }
 
+    /**
+     * Configures the middleware
+     * @memberof AureolinApplication
+     * @returns {void}
+     * @private
+     */
     private configureMiddlewares = (): void => {
         this.server.use(async (ctx, next) => {
             this.logger.info(`REQUEST: ${ctx.method} ${ctx.url}`)
@@ -116,6 +195,12 @@ export class AureolinApplication extends Emitter {
         this.logger.info('Configured Middlewares')
     }
 
+    /**
+     * Configures the routers
+     * @memberof AureolinApplication
+     * @returns {void}
+     * @private
+     */
     private configureRouters = (): void => {
         for (const endpoint of endpointStore) {
             const controller = endpointStore.getController(endpoint.controller)
@@ -142,5 +227,10 @@ export class AureolinApplication extends Emitter {
         this.logger.info('Configured Routers')
     }
 
+    /**
+     * Creates a new instance of AureolinApplication
+     * @param {CreateOptions} options - Options for the application
+     * @returns {AureolinApplication} - New instance of AureolinApplication
+     */
     public static create = (options: CreateOptions): AureolinApplication => new AureolinApplication(options)
 }
