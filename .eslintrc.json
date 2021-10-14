@@ -16,5 +16,6 @@
         "@typescript-eslint"
     ],
     "rules": {
+        "no-return-await": 1
     }
 }
