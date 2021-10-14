@@ -141,4 +141,6 @@ export class AureolinApplication extends Emitter {
         this.emit('configure.routers')
         this.logger.info('Configured Routers')
     }
+
+    public static create = (options: CreateOptions): AureolinApplication => new AureolinApplication(options)
 }
