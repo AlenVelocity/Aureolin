@@ -3,12 +3,10 @@ import { existsSync } from 'fs'
 import Application from 'koa'
 import { handleRoute } from './handlers/route'
 import endpointStore from './store/endpoints'
-import middlewareStore from './store/middleware'
 import { CreateOptions, Methods } from './types'
 import { readdirRecursive } from './utils'
 import Emitter from './Emitter'
 import logger, { Logger } from 'pino'
-import bodyParser from 'koa-bodyparser'
 
 /**
  * The Aureolin Application class.
@@ -76,7 +74,6 @@ export class AureolinApplication extends Emitter {
         (async () => {
             await this.loadProviders()
             await this.loadControllers()
-            await this.loadMiddleware()
             this.configureMiddlewares()
             this.configureRouters()
             this.emit('app.ready', this)
@@ -141,58 +138,13 @@ export class AureolinApplication extends Emitter {
     }
 
     /**
-     * Loads the middleware
-     * @memberof AureolinApplication
-     * @returns {Promise<void>}
-     * @private
-     * @async
-     */
-    private loadMiddleware = async (): Promise<void> => {
-        const middlewarePath = this.path('middleware')
-        if (!existsSync(middlewarePath)) return
-        const files = readdirRecursive(middlewarePath)
-        for (const file of files) {
-            await import(file)
-        }
-        this.emit('load.middleware.done')
-        this.logger.info(`Loadded ${files.length} Middleware`)
-    }
-
-    /**
      * Configures the middleware
      * @memberof AureolinApplication
      * @returns {void}
      * @private
      */
     private configureMiddlewares = (): void => {
-        this.server.use(async (ctx, next) => {
-            this.logger.info(`REQUEST: ${ctx.method} ${ctx.url}`)
-            await next()
-        })
-        this.server.use(
-            bodyParser({
-                enableTypes: ['json', 'form', 'text']
-            })
-        )
-        for (const Middleware of middlewareStore) {
-            this.server.use(async (ctx, next) => {
-                try {
-                    await new Middleware().use(ctx, next)
-                    await next()
-                } catch (error) {
-                    this.emit('error', error)
-                    const E = error as Error & { status?: number }
-                    const status = E.status || 500
-                    ctx.status = status
-                    ctx.body = {
-                        error: E.message || 'Internal Server Error',
-                        status
-                    }
-                }
-            })
-        }
-        this.emit('configure.middlewares')
-        this.logger.info('Configured Middlewares')
+        // TODO
     }
 
     /**

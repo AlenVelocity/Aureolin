@@ -148,40 +148,6 @@ export interface ControllerDefinition {
 export type Methods = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH' | 'HEAD' | 'OPTIONS'
 
 /**
- * Middleware
- */
-export interface AureolinMiddleware {
-    /**
-     * Middleware function
-     * @param {Context} ctx - Koa context
-     * @param {Function} next - Next middleware function
-     * @returns {Promise<void>}
-     * @example
-     * ```ts
-     * export class MyMiddleware implements AureolinMiddleware {
-     *      public use = async (ctx: Context) => {
-     *         ctx.body = 'Hello World'
-     *      }
-     * }
-     * ```
-     */
-    use: (context: Context, next: () => Promise<void> | void) => Promise<void> | void
-}
-
-/**
- * Middleware class
- * @example
- * ```ts
- * export class MyMiddleware implements AureolinMiddleware {
- *     public use = async (ctx: Context) => {
- *        ctx.body = 'Hello World'
- *    }
- * }
- * ```
- */
-export type MiddlewareClass = new () => AureolinMiddleware
-
-/**
  * Provider Interface
  */
 export interface IProvider {
@@ -266,9 +232,7 @@ export interface EventsMap {
     'app.start': number
     'load.controller': ControllerDefinition
     'load.controllers.done': never
-    'load.middleware.done': never
     'load.providers.done': never
-    'configure.middlewares': never
     'configure.router': EndpointDefinition
     'configure.routers': never
     error: unknown
