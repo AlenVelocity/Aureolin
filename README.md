@@ -178,7 +178,10 @@ export default class DrinksController {
 }
 ```
 
+And finally you can call `create()` to start your app.
+
 ```TS
+
 /** @filename main.ts */
 
 import { create } from 'aureolin'
