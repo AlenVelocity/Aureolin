@@ -1,5 +1,5 @@
 import EventEmitter from 'events'
-import Application from 'koa'
+import Application, { Middleware } from 'koa'
 import { Logger } from 'pino'
 import { AureolinApplication } from './AureolinApplication'
 
@@ -220,6 +220,11 @@ export interface CreateOptions {
      * @example __dirname
      */
     root?: string
+    /**
+     * Middleware to be used
+     * @type {Middleware[]}
+     */
+    middlewares?: Array<Middleware>
     /**
      * Pino logger instance
      * @type {Logger}

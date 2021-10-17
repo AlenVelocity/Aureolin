@@ -7,6 +7,7 @@ import { CreateOptions, Methods } from './types'
 import { readdirRecursive } from './utils'
 import Emitter from './Emitter'
 import logger, { Logger } from 'pino'
+import middlewareStore from './store/middleware'
 
 /**
  * The Aureolin Application class.
@@ -143,14 +144,33 @@ export class AureolinApplication extends Emitter {
      * @private
      */
     private configureRouters = (): void => {
+        const controllers = new Array<string>()
+        this.router.use(...(this.options.middlewares ?? []))
         for (const endpoint of endpointStore) {
             const controller = endpointStore.getController(endpoint.controller)
             if (!controller) throw new Error(`Controller ${endpoint.controller} not found`)
-            let path = controller.path.concat(endpoint.path)
+            if (!controllers.includes(endpoint.controller)) {
+                const middlewares = middlewareStore.getControllerMiddleware(endpoint.controller)
+                this.router.use(endpoint.path, ...middlewares.flat())
+                console.log(`${endpoint.controller} middlewares loaded`)
+                console.log(middlewares)
+                controllers.push(endpoint.controller)
+            }
+            let path = `${controller.path}${
+                endpoint.path.startsWith('/') && controller.path.endsWith('/')
+                    ? endpoint.path.slice(1)
+                    : !endpoint.path.startsWith('/') && !controller.path.endsWith('/')
+                    ? '/'.concat(endpoint.path)
+                    : endpoint.path
+            }`
             const last = path.length - 1
             if (path[last] === '/') path = path.substring(0, last)
+            console.log(path)
             const router = this.methods.get(endpoint.method)
             if (!router) throw new Error(`Method ${endpoint.method} not found`)
+            const middleware = middlewareStore.getMethodMiddleware(endpoint.controller, endpoint.propertyKey)
+            console.log(middleware)
+            this.router.use(path, ...middleware.flat())
             router.call(
                 this.router,
                 path,
