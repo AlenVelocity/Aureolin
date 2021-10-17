@@ -74,7 +74,6 @@ export class AureolinApplication extends Emitter {
         (async () => {
             await this.loadProviders()
             await this.loadControllers()
-            this.configureMiddlewares()
             this.configureRouters()
             this.emit('app.ready', this)
         })()
@@ -135,16 +134,6 @@ export class AureolinApplication extends Emitter {
         }
         this.emit('load.controllers.done')
         this.logger.info(`Loaded ${files.length} controllers`)
-    }
-
-    /**
-     * Configures the middleware
-     * @memberof AureolinApplication
-     * @returns {void}
-     * @private
-     */
-    private configureMiddlewares = (): void => {
-        // TODO
     }
 
     /**
