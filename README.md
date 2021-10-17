@@ -1,7 +1,7 @@
 <div align=center>
 
 # Aureolin
-**Aureolin** is a simple, fast, and powerful REST API framework for Node.js with a focus on simplicity and performance.
+**Aureolin** is a simple, fast, and powerful REST API framework for Node.js with a focus on simplicity and performance. Built With [Koa](https://github.com/koajs/koa)
 
 [![NPM](https://img.shields.io/npm/l/aureolin?style=flat-square&label=License)](https://github.com/AlenSaito1/Aureolin/blob/master/LICENSE) [![Discord](https://img.shields.io/discord/898177582829285387?label=Discord&style=flat-square)](https://discord.gg/3Pg2Nw2vjn) [![CodeFactor](https://img.shields.io/codefactor/grade/github/alensaito1/aureolin?style=flat-square&label=Code%20Quality)](https://www.codefactor.io/repository/github/alensaito1/aureolin) [![NPM](https://img.shields.io/npm/dw/aureolin?style=flat-square&label=Downloads)](https://npmjs.com/package/aureolin)
 
@@ -100,7 +100,7 @@ export default class TimeProvider {
     }
 }
 ```
-`Inject(provide: string)`
+`@Inject(provide: string)`
 ```TS
 /** @filename controllers/time.ts */
 import { Controller, Context, Get, Inject } from 'aureolin'
@@ -120,33 +120,74 @@ export class TimeController {
 
 ## Middlewares
 
-Middlewares are functions that are called before the controller methods are called.
+There are two ways to use middlewares.
 
-The example middleware shown below will log the method and path to the console every time a request is made.
-First and only param of the `use` method is the context itslef (for now)
+1. Add `middlewares` field in the options object 
+
 ```TS
-/** @filename middlewares/logger.ts */
-import { Middleware, AureolinMiddleware } from 'aureolin'
+import { create } from 'aureolin'
 
-@Middleware()
-export class Logger implements AureolinMiddleware {
-    async use(ctx: Context) {
-        console.log(`${ctx.method} ${ctx.path}`)
+create({
+    port: 3000,
+    root; __dirname,
+    middlewares: [
+        (ctx: Context, next: () => Promise<void>) => {
+            console.log('Middleware 1')
+            return next()
+        },
+        (ctx: Context, next: () => Promise<void>) => {
+            console.log('Middleware 2')
+            return next()
+        }
+    ]
+})
+```
+These middleware will run on every request 
+
+2. Use the `@Middleware` and `@ControllerMiddleware` Decorator factories
+
+```TS
+import { Middleware, Controller, ControllerMiddleware, Context, Get, Ctx, Param, NextFunction } from 'aureolin'
+
+@Contoller('cakes')
+@ContollerMiddleware([
+    (ctx: Context, next: Next) => {
+        console.log('Controller Middleware 1')
+        return next()
+    }
+])
+export default class DrinksController {
+
+    @Get('/cheesecake')
+    @Middleware([cheesecakemiddleware])
+    public cheesecake() {
+        return {
+            name: 'Cheesecake',
+            ingredients: ['cheese', 'flour', 'sugar']
+        }
+    }
+
+    @Get('redvelvet')
+    @Middleware([redvelvetmiddleware])
+    public redvelvel() {
+        return {
+            name: 'Red Velvet',
+            ingredients: ['cheese', 'flour', 'sugar', 'red stuff']
+        }
     }
 }
 ```
-
-After you have created all the necessary controllers and middlewares and placed them in the correct directories, you can create a new application.
 
 ```TS
 /** @filename main.ts */
 
 import { create } from 'aureolin'
-
+import { Middleware } from '/Middleware'
 const main = async () => {
     const app = await create({
         port: 3000,
-        root: __dirname
+        root: __dirname,
+        middlewares: [Middleware]
     })
 }
 
