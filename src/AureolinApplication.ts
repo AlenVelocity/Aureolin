@@ -8,7 +8,7 @@ import { readdirRecursive } from './utils'
 import Emitter from './Emitter'
 import logger, { Logger } from 'pino'
 import middlewareStore from './store/middleware'
-
+import bodyParser from 'koa-bodyparser'
 /**
  * The Aureolin Application class.
  * @class
@@ -145,10 +145,14 @@ export class AureolinApplication extends Emitter {
      */
     private configureRouters = (): void => {
         const controllers = new Array<string>()
-        this.router.use(async (ctx, next) => {
-            this.logger.info(`Request ${ctx.request.method} ${ctx.request.url}`)
-            await next()
-        }, ...(this.options.middlewares ?? []))
+        this.router.use(
+            bodyParser(),
+            async (ctx, next) => {
+                this.logger.info(`Request ${ctx.request.method} ${ctx.request.url}`)
+                await next()
+            },
+            ...(this.options.middlewares ?? [])
+        )
         for (const endpoint of endpointStore) {
             const controller = endpointStore.getController(endpoint.controller)
             if (!controller) throw new Error(`Controller ${endpoint.controller} not found`)
