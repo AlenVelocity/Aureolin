@@ -1,13 +1,14 @@
-import { Controller, Get, Context, Ctx, Param } from '../../src'
+import { Controller, Get, Context, Ctx, Param, Middleware, ControllerMiddleware } from '../../src'
+import { Aureolin } from '../middleware/Aureolin'
 
-@Controller('/hello')
+@Controller('/hello/')
 export default class HelloController {
-    @Get('/')
+    @Get('')
     public index(): string {
-        return '/'
+        return 'Hello'
     }
 
-    @Get('/:name')
+    @Get(':name')
     public hello(@Ctx() ctx: Context): string {
         return `Hello ${ctx.params.name}!`
     }

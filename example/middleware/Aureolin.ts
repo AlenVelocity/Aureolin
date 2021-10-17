@@ -1,13 +1,10 @@
-import { AureolinMiddleware, Middleware, Context } from '../../src'
+import { Context, NextFunction } from '../../src'
 
-@Middleware()
-export default class Aureolin implements AureolinMiddleware {
-    private package = () => {
-        return import('../../package.json')
-    }
-
-    public use = async (ctx: Context): Promise<void> => {
+export const Aureolin = () => {
+    return async (ctx: Context, next: NextFunction) => {
+        console.log('Aureolin', 'middleware')
         ctx.res.setHeader('X-Aureolin', 'Aureolin')
-        ctx.res.setHeader('X-Aureolin-Version', (await this.package()).version)
+        ctx.res.setHeader('X-Aureolin-Version', (await import('../../package.json')).version)
+        await next()
     }
 }

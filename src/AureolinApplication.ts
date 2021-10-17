@@ -145,15 +145,16 @@ export class AureolinApplication extends Emitter {
      */
     private configureRouters = (): void => {
         const controllers = new Array<string>()
-        this.router.use(...(this.options.middlewares ?? []))
+        this.router.use(async (ctx, next) => {
+            this.logger.info(`Request ${ctx.request.method} ${ctx.request.url}`)
+            await next()
+        }, ...(this.options.middlewares ?? []))
         for (const endpoint of endpointStore) {
             const controller = endpointStore.getController(endpoint.controller)
             if (!controller) throw new Error(`Controller ${endpoint.controller} not found`)
             if (!controllers.includes(endpoint.controller)) {
                 const middlewares = middlewareStore.getControllerMiddleware(endpoint.controller)
                 this.router.use(endpoint.path, ...middlewares.flat())
-                console.log(`${endpoint.controller} middlewares loaded`)
-                console.log(middlewares)
                 controllers.push(endpoint.controller)
             }
             let path = `${controller.path}${
@@ -165,11 +166,9 @@ export class AureolinApplication extends Emitter {
             }`
             const last = path.length - 1
             if (path[last] === '/') path = path.substring(0, last)
-            console.log(path)
             const router = this.methods.get(endpoint.method)
             if (!router) throw new Error(`Method ${endpoint.method} not found`)
             const middleware = middlewareStore.getMethodMiddleware(endpoint.controller, endpoint.propertyKey)
-            console.log(middleware)
             this.router.use(path, ...middleware.flat())
             router.call(
                 this.router,
