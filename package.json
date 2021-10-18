@@ -8,7 +8,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsc -p .",
+    "build": "rm -rf dist && tsc -p .",
     "lint": "eslint \"src/**/*.ts\"",
     "prepare": "npm run build",
     "fmt": "prettier --config .prettierrc \"**/*.ts\" --write",
