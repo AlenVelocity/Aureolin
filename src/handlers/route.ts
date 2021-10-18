@@ -1,4 +1,5 @@
 import { Middleware } from 'koa'
+import { Exception } from '..'
 import paramStore from '../store/param'
 import { Context } from '../types'
 import { getParam } from './param'
@@ -19,7 +20,7 @@ export const handleRoute = (
             const res = await cb(...args)
             if (res) context.body = res
         } catch (err) {
-            const E = err as Error & { status?: number }
+            const E = err as Partial<Exception>
             const status = E.status ?? 500
             context.status = status
             context.body = {
