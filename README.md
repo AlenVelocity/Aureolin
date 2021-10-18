@@ -156,7 +156,7 @@ import { Middleware, Controller, ControllerMiddleware, Context, Get, Ctx, Param,
         return next()
     }
 ])
-export default class DrinksController {
+export default class CakesController {
 
     @Get('/cheesecake')
     @Middleware([cheesecakemiddleware])
