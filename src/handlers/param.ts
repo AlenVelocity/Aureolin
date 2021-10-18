@@ -10,6 +10,12 @@ export const getParam = (ctx: Context, name: string, meta: Record<string, string
             return ctx.request.body
         case 'ctx':
             return ctx
+        case 'res':
+            return ctx.response
+        case 'req':
+            return ctx.request
+        case 'header':
+            return meta?.['header'] ? ctx.header?.[meta['header']] : ctx.header
         default:
             return undefined
     }
