@@ -1,4 +1,5 @@
-import { Body, Controller, Get, Inject, Post } from '../../src'
+import { Response } from 'koa'
+import { Body, Controller, Exception, Get, Header, Inject, Post, Res } from '../../src'
 import type PackageProvider from '../providers/PackageProvider'
 import type TimeProvider from '../providers/TimeProvider'
 
@@ -27,6 +28,28 @@ export default class HomeController {
         return this.tm.get()
     }
 
+    @Post('post')
+    public test(@Body() body: Record<string, unknown>): typeof body {
+        return {
+            body: body
+        }
+    }
+
+    @Get('res')
+    public res(@Res() res: Response): typeof res {
+        return res
+    }
+
+    @Get('error')
+    public error(): never {
+        throw new Exception('This is an Error', 502)
+    }
+
+    @Get('headers')
+    public headers(@Header() headers: Record<string, string>): Record<string, string> {
+        return headers
+    }
+
     @Get('routes')
     public routes(): Record<string, string> {
         return {
@@ -35,16 +58,12 @@ export default class HomeController {
             '/time': 'Current time',
             '/routes': 'Routes',
             '/post': 'Displays the request body',
+            '/res': 'Displays the response object',
+            '/error': 'Throws an error',
+            '/headers': 'Displays the request headers',
             '/hello/': 'Hello',
             '/hello/:name': 'Hello {name}',
             '/hello/:name/:age': 'Hello {name} {age}'
-        }
-    }
-
-    @Post('post')
-    public test(@Body() body: Record<string, unknown>): typeof body {
-        return {
-            body: body
         }
     }
 }
