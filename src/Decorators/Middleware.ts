@@ -4,7 +4,6 @@ import middlewareStore from '../store/middleware'
 
 export const Middleware = (middleware: TMiddleware[]): MethodDecorator => {
     return (target: any, propertyKey: string | symbol) => {
-        console.log(target.constructor.name)
         middlewareStore.registerMethodMiddleware(target.constructor.name, propertyKey.toString(), middleware)
     }
 }
