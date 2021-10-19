@@ -75,6 +75,7 @@ export class AureolinApplication extends Emitter {
         (async () => {
             await this.loadProviders()
             await this.loadControllers()
+            this.configureMiddleware()
             this.configureRouters()
             this.emit('app.ready', this)
         })()
@@ -99,6 +100,29 @@ export class AureolinApplication extends Emitter {
             this.emit('app.start', this.options.port)
             this.logger.info(`Server started on port ${this.options.port}`)
         })
+    }
+
+    private configureMiddleware = async () => {
+        this.router.use(
+            bodyParser(),
+            async (ctx, next) => {
+                this.logger.info(`Request ${ctx.request.method} ${ctx.request.url}`)
+                await next()
+            },
+            ...(this.options.middlewares ?? [])
+        )
+        for (const [controller, { path }] of endpointStore.getControllers()) {
+            const middlewares = middlewareStore.getControllerMiddleware(controller)
+            for (const middleware of middlewares.flat()) {
+                this.router.use(path, middleware)
+            }
+            const endpoints = endpointStore.getControllerEndpoints(controller)
+            for (const endpoint of endpoints) {
+                const endpointPath = this.getPath(path, endpoint.path)
+                const middleware = middlewareStore.getMethodMiddleware(endpoint.controller, endpoint.propertyKey)
+                this.router.use(endpointPath, ...middleware.flat())
+            }
+        }
     }
 
     /**
@@ -137,6 +161,19 @@ export class AureolinApplication extends Emitter {
         this.logger.info(`Loaded ${files.length} controllers`)
     }
 
+    private getPath = (controller: string, endpoint: string): string => {
+        let path = `${controller}${
+            endpoint.startsWith('/') && controller.endsWith('/')
+                ? endpoint.slice(1)
+                : !endpoint.startsWith('/') && !controller.endsWith('/')
+                ? '/'.concat(endpoint)
+                : endpoint
+        }`
+        const last = path.length - 1
+        if (path[last] === '/') path = path.substring(0, last)
+        return path
+    }
+
     /**
      * Configures the routers
      * @memberof AureolinApplication
@@ -144,36 +181,12 @@ export class AureolinApplication extends Emitter {
      * @private
      */
     private configureRouters = (): void => {
-        const controllers = new Array<string>()
-        this.router.use(
-            bodyParser(),
-            async (ctx, next) => {
-                this.logger.info(`Request ${ctx.request.method} ${ctx.request.url}`)
-                await next()
-            },
-            ...(this.options.middlewares ?? [])
-        )
         for (const endpoint of endpointStore) {
             const controller = endpointStore.getController(endpoint.controller)
             if (!controller) throw new Error(`Controller ${endpoint.controller} not found`)
-            if (!controllers.includes(endpoint.controller)) {
-                const middlewares = middlewareStore.getControllerMiddleware(endpoint.controller)
-                this.router.use(endpoint.path, ...middlewares.flat())
-                controllers.push(endpoint.controller)
-            }
-            let path = `${controller.path}${
-                endpoint.path.startsWith('/') && controller.path.endsWith('/')
-                    ? endpoint.path.slice(1)
-                    : !endpoint.path.startsWith('/') && !controller.path.endsWith('/')
-                    ? '/'.concat(endpoint.path)
-                    : endpoint.path
-            }`
-            const last = path.length - 1
-            if (path[last] === '/') path = path.substring(0, last)
+            const path = this.getPath(controller.path, endpoint.path)
             const router = this.methods.get(endpoint.method)
             if (!router) throw new Error(`Method ${endpoint.method} not found`)
-            const middleware = middlewareStore.getMethodMiddleware(endpoint.controller, endpoint.propertyKey)
-            this.router.use(path, ...middleware.flat())
             router.call(
                 this.router,
                 path,
