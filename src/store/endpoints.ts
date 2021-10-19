@@ -34,6 +34,16 @@ class EndpointStore implements Iterable<EndpointDefinition> {
     public getController = (controller: string): ControllerDefinition | undefined => {
         return this.controllers.get(controller)
     }
+
+    public getControllers = (): Array<[string, ControllerDefinition]> => {
+        return [...this.controllers.entries()]
+    }
+
+    public getControllerEndpoints = (controller: string): Array<EndpointDefinition> => {
+        const controllerDefinition = this.controllers.get(controller)
+        if (!controllerDefinition) return []
+        return [...this.list.values()].filter((e) => e.controller === controller)
+    }
 }
 
 const endpointStore = new EndpointStore()
