@@ -31,7 +31,7 @@ describe('Aureolin', () => {
 
     it('should throw an error', async () => {
         const { response } = await axios.get('http://localhost:3000/error').catch((e) => e)
-        assert.strictEqual(response.data.status, 502)
-        assert.strictEqual(response.data.message, 'This is an Error')
+        assert.strictEqual(response.status, 502)
+        assert.strictEqual(response.data, 'This is an Error')
     })
 })
