@@ -1,5 +1,5 @@
 import { Response } from 'koa'
-import { Body, Controller, Exception, Get, Header, Inject, Post, Res } from '../../src'
+import { Body, Controller, BadGatewayException, Get, Header, Inject, Post, Res } from '../../src'
 import type PackageProvider from '../providers/PackageProvider'
 import type TimeProvider from '../providers/TimeProvider'
 
@@ -42,7 +42,7 @@ export default class HomeController {
 
     @Get('error')
     public error(): never {
-        throw new Exception('This is an Error', 502)
+        throw new BadGatewayException('This is an Error')
     }
 
     @Get('headers')
