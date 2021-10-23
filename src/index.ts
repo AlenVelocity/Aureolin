@@ -25,3 +25,4 @@ export { AureolinApplication }
 export * from './Decorators'
 export * from './types'
 export * from './Exception'
+export * from './HttpStatus'
