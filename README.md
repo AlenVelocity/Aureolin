@@ -182,11 +182,11 @@ export default class CakesController {
 ## Error Handling
 
 Aureolin takes care of error handling for you.
-Use the exported `Exception` class to throw exceptions.
+Use the exported `Exception` or Prebuilt classes to throw error dircetly in your code and aureolin will handle it.
 
 ```ts
 /** @filename controllers/error.ts */
-import { Controller, Context, Get, Exception } from 'aureolin'
+import { Controller, Context, Get, BadRequestException } from 'aureolin'
 
 @Controller('/error')
 export class ErrorController {
@@ -197,7 +197,7 @@ export class ErrorController {
 
     @Get('/:name')
     async errorName(@Ctx() { params: { name } }: Context): never {
-        throw new Exception(`${name} is not a valid name!`, 400)
+        if (!name) throw new BadRequestException(`${name} is not a valid name!`, 400)
     }
 }
 ```
