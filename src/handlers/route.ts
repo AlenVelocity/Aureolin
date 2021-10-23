@@ -21,11 +21,11 @@ export const handleRoute = (
             if (res) context.body = res
         } catch (err) {
             const E = err as Partial<Exception>
-            const status = E.status ?? 500
+            const { data, status = 500 } = E
             context.status = status
-            context.body = {
+            context.body = data || {
                 status,
-                message: E.message ?? 'Internal Server Error'
+                message: E.message || (status === 500 ? 'Internal Server Error' : '')
             }
         }
     }
