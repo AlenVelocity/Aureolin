@@ -5,7 +5,7 @@ describe('Aureolin', () => {
     // start example
     it('should be able to create a new Aureolin instance', async () => {
         assert.ok(await (await import('./App')).start())
-    }).timeout(20000)
+    })
 
     it('should fetch', async () => {
         const response = await axios.get('http://localhost:3000')
@@ -33,5 +33,11 @@ describe('Aureolin', () => {
         const { response } = await axios.get('http://localhost:3000/error').catch((e) => e)
         assert.strictEqual(response.status, 502)
         assert.strictEqual(response.data, 'This is an Error')
+    })
+
+    it('should have the specifed headers', async () => {
+        const { headers } = await axios.get('http://localhost:3000')
+        assert.strictEqual(headers['x-aureolin'], 'Aureolin')
+        assert.strictEqual(headers['x-aureolin-version'], (await import('../package.json')).version)
     })
 })
