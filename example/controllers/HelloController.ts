@@ -1,8 +1,6 @@
-import { Controller, Get, Context, Ctx, Param, ControllerMiddleware } from '../../src'
-import { Aureolin } from '../middleware/Aureolin'
+import { Controller, Get, Context, Ctx, Param } from '../../src'
 
 @Controller('/hello/')
-@ControllerMiddleware([Aureolin])
 export default class HelloController {
     @Get('')
     public index(): string {

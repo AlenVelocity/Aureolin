@@ -1,9 +1,11 @@
 import { Response } from 'koa'
-import { Body, Controller, BadGatewayException, Get, Header, Inject, Post, Res } from '../../src'
+import { Body, Controller, BadGatewayException, Get, Header, Inject, Post, Res, ControllerMiddleware } from '../../src'
+import { Aureolin } from '../middleware/Aureolin'
 import type PackageProvider from '../providers/PackageProvider'
 import type TimeProvider from '../providers/TimeProvider'
 
 @Controller('/')
+@ControllerMiddleware([Aureolin()])
 export default class HomeController {
     constructor(@Inject('time') public tm: TimeProvider, @Inject('package') public pkg: PackageProvider) {}
 
