@@ -5,7 +5,7 @@ describe('Aureolin', () => {
     // start example
     it('should be able to create a new Aureolin instance', async () => {
         assert.ok(await (await import('./App')).start())
-    })
+    }).timeout(20000)
 
     it('should fetch', async () => {
         const response = await axios.get('http://localhost:3000')
