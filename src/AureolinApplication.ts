@@ -102,15 +102,11 @@ export class AureolinApplication extends Emitter {
         })
     }
 
-    private configureMiddleware = async () => {
-        this.router.use(
-            bodyParser(),
-            async (ctx, next) => {
-                this.logger.info(`Request ${ctx.request.method} ${ctx.request.url}`)
-                await next()
-            },
-            ...(this.options.middlewares ?? [])
-        )
+    private configureMiddleware = () => {
+        this.router.use(bodyParser(), async (ctx, next) => {
+            this.logger.info(`Request ${ctx.request.method} ${ctx.request.url}`)
+            await next()
+        })
         for (const [controller, { path }] of endpointStore.getControllers()) {
             const middlewares = middlewareStore.getControllerMiddleware(controller)
             for (const middleware of middlewares.flat()) {

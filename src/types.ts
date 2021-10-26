@@ -1,5 +1,5 @@
 import EventEmitter from 'events'
-import Application, { Middleware } from 'koa'
+import Application from 'koa'
 import { Logger } from 'pino'
 import { AureolinApplication } from './AureolinApplication'
 
@@ -221,11 +221,6 @@ export interface CreateOptions {
      */
     root?: string
     /**
-     * Middleware to be used
-     * @type {Middleware[]}
-     */
-    middlewares?: Array<Middleware>
-    /**
      * Pino logger instance
      * @type {Logger}
      */
@@ -249,4 +244,4 @@ export interface AureolinEventEmitter extends EventEmitter {
     removeallListeners<K extends keyof EventsMap>(event: K): this
     emit<K extends keyof EventsMap>(event: K, arg?: EventsMap[K]): boolean
 }
-export { Next as NextFunction } from 'koa'
+export { Next as NextFunction, Middleware as MiddlewareFunction } from 'koa'

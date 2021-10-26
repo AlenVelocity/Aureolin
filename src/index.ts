@@ -8,10 +8,8 @@ import { CreateOptions } from './types'
  */
 export const create = (options: CreateOptions): Promise<AureolinApplication> => {
     return new Promise((resolve) => {
-        new AureolinApplication(options).on('app.ready', (app) => {
-            app.on('app.start', () => {
-                app.removeAllListeners('app.start')
-                app.removeAllListeners('app.ready')
+        new AureolinApplication(options).once('app.ready', (app) => {
+            app.once('app.start', () => {
                 resolve(app)
             })
             app.start()
