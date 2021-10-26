@@ -34,6 +34,8 @@ export const InternalServerErrorException = generateHttpExceptionClass(
     HttpStatus.INTERNAL_SERVER_ERROR,
     'Internal Server Error'
 )
+export const NotImplementedException = generateHttpExceptionClass(HttpStatus.NOT_IMPLEMENTED, 'Not Implemented')
+export const BadGatewayException = generateHttpExceptionClass(HttpStatus.BAD_GATEWAY, 'Bad Gateway')
 export const ServiceUnavailableException = generateHttpExceptionClass(
     HttpStatus.SERVICE_UNAVAILABLE,
     'Service Unavailable'
