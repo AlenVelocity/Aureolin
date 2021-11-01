@@ -10,7 +10,7 @@ describe('Aureolin', () => {
     it('should fetch', async () => {
         const response = await axios.get('http://localhost:3000')
         assert.strictEqual(response.status, 200)
-        assert.strictEqual(response.data, 'Welcome to Aureolin!')
+        assert.strictEqual(response.data, '<div><h1>Welcome to Aureolin!</h1><p>Aureolin is a Fast, Simple, and Flexible Framework for Node.js</p><p><a href="https://www.npmjs.com/package/aureolin">https:&#x2F;&#x2F;www.npmjs.com&#x2F;package&#x2F;aureolin</a></p></div>')
     })
 
     it('should fetch name and age', async () => {
