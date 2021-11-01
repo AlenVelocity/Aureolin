@@ -1,5 +1,5 @@
 import { Response } from 'koa'
-import { Body, Controller, BadGatewayException, Get, Header, Inject, Post, Res, ControllerMiddleware } from '../../src'
+import { React, Body, Controller, BadGatewayException, Get, Header, Inject, Post, Res, ControllerMiddleware } from '../../src'
 import { Aureolin } from '../middleware/Aureolin'
 import type PackageProvider from '../providers/PackageProvider'
 import type TimeProvider from '../providers/TimeProvider'
@@ -10,8 +10,18 @@ export default class HomeController {
     constructor(@Inject('time') public tm: TimeProvider, @Inject('package') public pkg: PackageProvider) {}
 
     @Get('/')
-    public index(): string {
-        return 'Welcome to Aureolin!'
+    public index(): any {
+        return (<div>
+            <h1>Welcome to Aureolin!</h1>
+            <p>
+                Aureolin is a Fast, Simple, and Flexible Framework for Node.js
+            </p>
+            <p>
+                <a href="https://www.npmjs.com/package/aureolin">
+                    https://www.npmjs.com/package/aureolin
+                </a>
+            </p>
+            </div>)
     }
 
     @Get('about')
