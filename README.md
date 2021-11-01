@@ -161,7 +161,7 @@ Use the exported `Exception` or Prebuilt classes to throw error dircetly in your
 
 ```ts
 /** @filename controllers/error.ts */
-import { Controller, Context, Get, BadRequestException } from 'aureolin'
+import { Controller, Context, Get, Exception, BadRequestException } from 'aureolin'
 
 @Controller('/error')
 export class ErrorController {
@@ -172,7 +172,7 @@ export class ErrorController {
 
     @Get('/:name')
     async errorName(@Ctx() { params: { name } }: Context): never {
-        if (!name) throw new BadRequestException(`${name} is not a valid name!`, 400)
+        if (!name) throw new BadRequestException(`${name} is not a valid name!`)
     }
 }
 ```
