@@ -1,3 +1,4 @@
+import { ElementNode } from 'async-jsx-html'
 import { Middleware } from 'koa'
 import { Exception } from '..'
 import paramStore from '../store/param'
@@ -17,8 +18,14 @@ export const handleRoute = (
     return async (context: Context): Promise<void> => {
         try {
             const args = sortedParams.map((param) => getParam(context, param.type, param.meta))
-            const res = await cb(...args)
-            if (res) context.body = res
+            let res = await cb(...args)
+            if (res) {
+                console.log(res)
+                if (res instanceof ElementNode) {
+                    res = await res.render()
+                }
+                context.body = res
+            }
         } catch (err) {
             const E = err as Partial<Exception>
             const { data, status = 500 } = E
