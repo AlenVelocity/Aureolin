@@ -25,4 +25,4 @@ export * from './types'
 export * from './Exception'
 export * from './HttpStatus'
 
-export { React, ElementNode } from 'async-jsx-html'
+export { React, ElementNode, Fragment } from 'async-jsx-html'
