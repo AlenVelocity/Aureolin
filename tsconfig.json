@@ -10,7 +10,8 @@
     "resolveJsonModule": true,
     "strict": true,                           
     "esModuleInterop": true,                  
-    "skipLibCheck": true,                     
+    "skipLibCheck": true,
+    "jsx": "react",                     
     "forceConsistentCasingInFileNames": true,
     "experimentalDecorators": true  
   },
