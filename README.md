@@ -45,7 +45,6 @@ Option Schema is as follows
 interface CreateOptions {
     port: number // port to listen on
     root: string // root directory where providers, middleware, and controllers are located
-    middleware?: Middleware[] // middleware to load
     logger?: Logger // Pino Logger
 }
 ```
@@ -121,31 +120,7 @@ export class TimeController {
 
 ## Middlewares
 
-There are two ways to use middlewares.
-
-1. Add `middlewares` field in the options object 
-
-```TS
-import { create } from 'aureolin'
-
-create({
-    port: 3000,
-    root; __dirname,
-    middlewares: [
-        (ctx: Context, next: () => Promise<void>) => {
-            console.log('Middleware 1')
-            return next()
-        },
-        (ctx: Context, next: () => Promise<void>) => {
-            console.log('Middleware 2')
-            return next()
-        }
-    ]
-})
-```
-These middleware will run on every request 
-
-2. Use the `@Middleware` and `@ControllerMiddleware` Decorator factories
+Use the `@Middleware` and `@ControllerMiddleware` Decorator factories
 
 ```TS
 import { Middleware, Controller, ControllerMiddleware, Context, Get, Ctx, Param, NextFunction } from 'aureolin'
@@ -168,7 +143,7 @@ export default class CakesController {
         }
     }
 
-    @Get('redvelvet')
+    @Get('/redvelvet')
     @Middleware([redvelvetmiddleware])
     public redvelvel() {
         return {
@@ -209,12 +184,10 @@ And finally you can call `create()` to start your app.
 /** @filename main.ts */
 
 import { create } from 'aureolin'
-import { Middleware } from '/Middleware'
 const main = async () => {
     const app = await create({
         port: 3000,
         root: __dirname,
-        middlewares: [Middleware]
     })
 }
 
