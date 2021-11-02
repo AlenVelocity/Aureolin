@@ -13,6 +13,8 @@
     "prepare": "npm run build",
     "fmt": "prettier --config .prettierrc \"**/*.ts\" --write",
     "test": "mocha -r ts-node/register \"tests/**/*.test.ts\" --exit",
+    "release": "release-it",
+    "prerelease": "npm run build",
     "example": "ts-node example/main.ts"
   },
   "keywords": [
