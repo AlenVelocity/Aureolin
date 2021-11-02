@@ -1,4 +1,4 @@
-import { Controller, Get, Context, Ctx, Param } from '../../src'
+import { Controller, Get, Context, Ctx, Param } from 'aureolin'
 
 @Controller('/hello/')
 export default class HelloController {
