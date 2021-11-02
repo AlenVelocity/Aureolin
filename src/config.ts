@@ -31,7 +31,7 @@ export type Config = {
  * @returns {Config} Loaded config object
  */
 export const loadConfig = (): Config => {
-    const path = process.cwd().concat('aureolin.config.js')
+    const path = join(process.cwd(), 'aureolin.config.js')
     if (!existsSync(path)) throw new Error('Config file not found')
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const config = require(path) as Partial<Config>
