@@ -24,5 +24,6 @@ export * from './Decorators'
 export * from './types'
 export * from './Exception'
 export * from './HttpStatus'
+export { Config } from './config'
 
 export { React, ElementNode, Fragment } from 'async-jsx-html'
