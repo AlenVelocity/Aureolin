@@ -1,14 +1,13 @@
 import { AureolinApplication } from './AureolinApplication'
-import { CreateOptions } from './types'
+import { loadConfig } from './config'
 
 /**
  * create a new Aureolin application
- * @param {CreateOptions} options
  * @returns {AureolinApplication} the application
  */
-export const create = (options: CreateOptions): Promise<AureolinApplication> => {
+export const create = (): Promise<AureolinApplication> => {
     return new Promise((resolve) => {
-        new AureolinApplication(options).once('app.ready', (app) => {
+        new AureolinApplication(loadConfig()).once('app.ready', (app) => {
             app.once('app.start', () => {
                 resolve(app)
             })

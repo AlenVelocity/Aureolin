@@ -6,7 +6,7 @@ import endpointStore from './store/endpoints'
 import { CreateOptions, Methods } from './types'
 import { readdirRecursive } from './utils'
 import Emitter from './Emitter'
-import logger, { Logger } from 'pino'
+import logger from 'pino'
 import middlewareStore from './store/middleware'
 import bodyParser from 'koa-bodyparser'
 /**
@@ -49,7 +49,13 @@ export class AureolinApplication extends Emitter {
      * @private
      * @readonly
      */
-    public logger: Logger
+    public logger = logger({
+        prettyPrint: {
+            colorize: true,
+            ignore: 'pid,hostname',
+            translateTime: 'yyyy-mm-dd HH:MM:ss.l'
+        }
+    })
 
     /**
      * Aureolin Application Constructor
@@ -59,15 +65,7 @@ export class AureolinApplication extends Emitter {
      */
     constructor(private options: CreateOptions) {
         super()
-        this.logger =
-            options.logger ||
-            logger({
-                prettyPrint: {
-                    colorize: true,
-                    ignore: 'pid,hostname',
-                    translateTime: 'yyyy-mm-dd HH:MM:ss.l'
-                }
-            })
+
         for (const method of ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'HEAD', 'OPTIONS']) {
             this.methods.set(method as Methods, this.router[method.toLowerCase() as 'get'])
         }

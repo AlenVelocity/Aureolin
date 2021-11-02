@@ -1,5 +1,6 @@
 import { existsSync } from 'fs'
 import { join } from 'path'
+import { Logger } from 'pino'
 
 /**
  * Configuration object type for Aureolin
@@ -10,13 +11,19 @@ export type Config = {
      * @type {number}
      * @default 3000
      */
-    port?: number
+    port: number
     /**
      * Dir where `contollers` and `providers` are located
      * @type {string}
      * @default process.cwd() + '/src'
      */
     root: string
+    /**
+     * Custom pino logger
+     * @type {Logger}
+     * @default import('pino').default
+     */
+    logger?: Logger
 }
 
 /**
