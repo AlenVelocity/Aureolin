@@ -18,7 +18,7 @@ export const create = (): Promise<AureolinApplication> => {
 
 export default create
 
-export { AureolinApplication }
+export type { AureolinApplication }
 export * from './Decorators'
 export * from './types'
 export * from './Exception'
