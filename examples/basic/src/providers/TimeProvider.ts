@@ -1,4 +1,4 @@
-import { Provider } from '../../src'
+import { Provider } from 'aureolin'
 
 @Provider('time')
 export default class TimeProvider {

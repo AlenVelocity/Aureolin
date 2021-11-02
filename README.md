@@ -19,35 +19,35 @@ npm install aureolin
 
 ## Example
 
-To get started with Aureolin, you need to call the `create` function exported by Aureolin.
+To get started with Aureolin, you need to create a config file named `aureolin.config.js` in the root of your project.
 
-The `create` function takes an options object as its first and only argument.
+```js
+/** @filename aureolin.config.js */
+
+const { join } = require('path')
+
+/** @type {import('aureolin').Config} */
+module.exports = {
+    root: join(process.cwd(), process.env.NODE_ENV === 'production' ? 'dist' : 'src')
+    port: 4000
+}
+```
+
+Then, use the `create` function to create the app.
 
 
 ```TS
-/** @filename main.ts */
+/** @filename src/main.ts */
 
 import { create } from 'aureolin'
 // import create from 'aureolin'
 // const { create } from require('aureolin')
 
 const main = async () => {
-    const app = await create({
-        port: 3000,
-        root: __dirname
-    })
+    const app = await create()
 }
 ```
 
-Option Schema is as follows
-
-```TS
-interface CreateOptions {
-    port: number // port to listen on
-    root: string // root directory where providers, middleware, and controllers are located
-    logger?: Logger // Pino Logger
-}
-```
 ### Controllers
 
 To create a controller you need to import the `Controller` decorator from Aureolin. 
@@ -60,7 +60,7 @@ Response can be a string, number, object, array, or even a JSX Element (YES! JSX
 Use the provided Parameter Decorators to let Aureolin to know what parameters pass to the to the controller methods.
 
 ```TSX
-/** @filename controllers/hello.tsx */
+/** @filename src/controllers/hello.tsx */
 import { Controller, Context, Get, Ctx, Param } from 'aureolin'
 
 @Controller('/hello')
@@ -95,7 +95,7 @@ Use the `inject` decorator to inject provider into your controllers.
 
 `@Provider(provide: string)`
 ```TS
-/** @filename providers/time.ts */
+/** @filename src/providers/time.ts */
 import { Provider } from 'aureolin'
 
 @Provider('time')
@@ -107,7 +107,7 @@ export default class TimeProvider {
 ```
 `@Inject(provide: string)`
 ```TS
-/** @filename controllers/time.ts */
+/** @filename src/controllers/time.ts */
 import { Controller, Context, Get, Inject } from 'aureolin'
 import type TimeProvider from 'providers/time.ts'
 
@@ -165,7 +165,7 @@ Aureolin takes care of error handling for you.
 Use the exported `Exception` or Prebuilt classes to throw error dircetly in your code and aureolin will handle it.
 
 ```ts
-/** @filename controllers/error.ts */
+/** @filename src/controllers/error.ts */
 import { Controller, Context, Get, Exception, BadRequestException } from 'aureolin'
 
 @Controller('/error')
@@ -186,14 +186,11 @@ export class ErrorController {
 And finally you can call `create()` to start your app.
 
 ```TS
-/** @filename main.ts */
+/** @filename src/main.ts */
 
 import { create } from 'aureolin'
 const main = async () => {
-    const app = await create({
-        port: 3000,
-        root: __dirname,
-    })
+    const app = await create()
 }
 
 main()

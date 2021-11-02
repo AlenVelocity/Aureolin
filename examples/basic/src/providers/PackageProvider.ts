@@ -1,10 +1,10 @@
-import { Provider } from '../../src'
+import { Provider } from 'aureolin'
 
 @Provider('package')
 export default class PackageProvider {
     constructor() {}
 
     public get = async () => {
-        return import('../../package.json')
+        return require('../../package.json')
     }
 }

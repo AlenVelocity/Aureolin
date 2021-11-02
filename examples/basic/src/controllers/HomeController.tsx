@@ -1,5 +1,5 @@
 import { Response } from 'koa'
-import { React, Body, Controller, BadGatewayException, Get, Header, Inject, Post, Res, ControllerMiddleware } from '../../src'
+import { React, Body, Controller, BadGatewayException, Get, Header, Inject, Post, Res, ControllerMiddleware } from 'aureolin'
 import { Aureolin } from '../middleware/Aureolin'
 import type PackageProvider from '../providers/PackageProvider'
 import type TimeProvider from '../providers/TimeProvider'
