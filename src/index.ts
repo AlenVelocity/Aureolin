@@ -23,6 +23,7 @@ export * from './Decorators'
 export * from './types'
 export * from './Exception'
 export * from './HttpStatus'
+export * from './jsx'
 export { Config } from './config'
 
-export { h, renderSSR, Fragment } from 'nano-jsx'
+export { renderSSR, Fragment } from 'nano-jsx'
