@@ -1,9 +1,6 @@
-import { DocumentSSR } from 'nano-jsx/lib/ssr'
 import { AureolinApplication } from './AureolinApplication'
 import { loadConfig } from './config'
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-;(globalThis as any).document = new DocumentSSR()
 
 /**
  * create a new Aureolin application
