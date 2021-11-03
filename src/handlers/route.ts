@@ -1,4 +1,6 @@
 import { Middleware } from 'koa'
+import { isValidElement } from 'preact'
+import { renderToString } from 'preact-render-to-string'
 import { Exception } from '..'
 import paramStore from '../store/param'
 import { Context } from '../types'
@@ -17,8 +19,9 @@ export const handleRoute = (
     return async (context: Context): Promise<void> => {
         try {
             const args = sortedParams.map((param) => getParam(context, param.type, param.meta))
-            const res = await cb(...args)
+            let res = await cb(...args)
             if (res) {
+                if (isValidElement(res)) res = renderToString(res)
                 context.body = res
             }
         } catch (err) {
