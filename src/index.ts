@@ -1,6 +1,5 @@
 import { AureolinApplication } from './AureolinApplication'
 import { loadConfig } from './config'
-import 'nano-jsx/lib/ssr'
 
 /**
  * create a new Aureolin application
@@ -26,4 +25,4 @@ export * from './Exception'
 export * from './HttpStatus'
 export { Config } from './config'
 
-export * from 'nano-jsx'
+export { h, renderSSR, Fragment } from 'nano-jsx'
