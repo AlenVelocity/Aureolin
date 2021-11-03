@@ -28,8 +28,9 @@ npm install aureolin
 
 ## Getting Started 
 
-- See [Getting Started Section](https://github.com/alensaito1/aureolin/blob/master/docs/Getting-Started.md)
+- [Getting Started](https://github.com/alensaito1/aureolin/blob/master/docs/Getting-Started.md)
 - [Starter Project](https://github.com/AlenSaito1/Aureolin-starter)
+- [Using JSX](https://github.com/alensaito1/aureolin/blob/master/docs/Using-JSX.md)
 
 ## Documentation
 

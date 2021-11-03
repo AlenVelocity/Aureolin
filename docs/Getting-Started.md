@@ -36,7 +36,7 @@ To create a controller you need to import the `Controller` decorator from Aureol
 Decorators for all Http methods are provided
 
 The return value of the methods prefixed with an Http Decorator in a controller are sent as the response
-Response can be a string, number, object, array, or even a JSX Element (YES! JSX See [Here](https://github.com/alensaito1/aureolin/blob/master/JSX.md))
+Response can be a string, number, object, array, or even a JSX Element (YES! JSX See [Here](https://github.com/alensaito1/aureolin/blob/master/docs/Using-JSX.md))
 
 Use the provided Parameter Decorators to let Aureolin to know what parameters pass to the to the controller methods.
 
