@@ -1,5 +1,4 @@
 import { Middleware } from 'koa'
-import { renderSSR } from 'nano-jsx'
 import { Exception } from '..'
 import endpointStore from '../store/endpoints'
 import paramStore from '../store/param'
@@ -19,11 +18,8 @@ export const handleRoute = (
     return async (context: Context): Promise<void> => {
         try {
             const args = sortedParams.map((param) => getParam(context, param.type, param.meta))
-            let res = await cb(...args)
+            const res = await cb(...args)
             if (res) {
-                if (endpointStore.shouldRender(controller, propertyKey)) res = renderSSR(res, {
-                    pathname: context.url,
-                })
                 context.body = res
             }
         } catch (err) {

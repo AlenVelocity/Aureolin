@@ -225,13 +225,6 @@ export interface CreateOptions {
      * @type {Logger}
      */
     logger?: Logger
-
-    /**
-     * Should JSX be parsed
-     * @type {boolean}
-     * @default false
-     */
-    jsx?: boolean 
 }
 
 export interface EventsMap {

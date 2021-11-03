@@ -71,7 +71,6 @@ export class AureolinApplication extends Emitter {
         }
         //prettier-ignore
         (async () => {
-            if (options.jsx) (await import('nano-jsx/lib/ssr')).initSSR() 
             await this.loadProviders()
             await this.loadControllers()
             this.configureMiddleware()

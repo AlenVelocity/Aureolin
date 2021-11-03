@@ -97,9 +97,3 @@ export const Head = (path: string): MethodDecorator => {
         })
     }
 }
-
-export const Render = (): MethodDecorator => {
-    return (target: any, propertyKey: string | symbol, _descriptor: PropertyDescriptor): void => {
-        endpointStore.setRender(target.constructor.name, propertyKey.toString())
-    }
-}
