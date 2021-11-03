@@ -1,6 +1,5 @@
 import { Middleware } from 'koa'
 import { Exception } from '..'
-import endpointStore from '../store/endpoints'
 import paramStore from '../store/param'
 import { Context } from '../types'
 import { getParam } from './param'
