@@ -24,6 +24,13 @@ export type Config = {
      * @default import('pino').default
      */
     logger?: Logger
+
+    /**
+     * Should JSX be parsed
+     * @type {boolean}
+     * @default false
+     */
+    jsx?: boolean
 }
 
 /**
@@ -37,6 +44,7 @@ export const loadConfig = (): Config => {
     const config = require(path) as Partial<Config>
     return {
         port: config.port ?? 3000,
-        root: config.root ?? join(process.cwd(), 'src')
+        root: config.root ?? join(process.cwd(), 'src'),
+        jsx: config.jsx ?? false,
     }
 }
