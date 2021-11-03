@@ -37,6 +37,6 @@ export const loadConfig = (): Config => {
     const config = require(path) as Partial<Config>
     return {
         port: config.port ?? 3000,
-        root: config.root ?? join(process.cwd(), 'src'),
+        root: config.root ?? join(process.cwd(), 'src')
     }
 }

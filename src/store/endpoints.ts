@@ -4,7 +4,7 @@ import providerStore from './provider'
 class EndpointStore implements Iterable<EndpointDefinition> {
     private readonly controllers = new Map<string, ControllerDefinition>()
     private readonly list = new Map<string, EndpointDefinition>()
-    private readonly renders = new Set<{ controller: string, method: string }>()
+    private readonly renders = new Set<{ controller: string; method: string }>()
 
     public registerEndpoint = (definition: EndpointDefinition) => {
         const key = `${definition.controller}-${definition.propertyKey}`
