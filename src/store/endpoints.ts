@@ -4,6 +4,7 @@ import providerStore from './provider'
 class EndpointStore implements Iterable<EndpointDefinition> {
     private readonly controllers = new Map<string, ControllerDefinition>()
     private readonly list = new Map<string, EndpointDefinition>()
+    private readonly renders = new Set<{ controller: string; method: string }>()
 
     public registerEndpoint = (definition: EndpointDefinition) => {
         const key = `${definition.controller}-${definition.propertyKey}`
@@ -43,6 +44,20 @@ class EndpointStore implements Iterable<EndpointDefinition> {
         const controllerDefinition = this.controllers.get(controller)
         if (!controllerDefinition) return []
         return [...this.list.values()].filter((e) => e.controller === controller)
+    }
+
+    public shouldRender = (controller: string, method: string): boolean => {
+        return this.renders.has({
+            controller,
+            method
+        })
+    }
+
+    public setRender = (controller: string, method: string) => {
+        this.renders.add({
+            controller,
+            method
+        })
     }
 }
 

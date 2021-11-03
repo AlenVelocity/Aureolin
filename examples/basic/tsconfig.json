@@ -2,7 +2,8 @@
     "compilerOptions": {
         "target": "es6",
         "lib": [
-            "ESNext"
+            "ESNext",
+            "DOM"
         ],                         
         "module": "commonjs",
         "outDir": "./dist",                        
@@ -10,9 +11,10 @@
         "strict": true,                           
         "esModuleInterop": true,                  
         "skipLibCheck": true,
-        "jsx": "react",                     
+        "jsx": "react",   
+        "jsxFactory": "h",              
         "forceConsistentCasingInFileNames": true,
-        "experimentalDecorators": true  
+        "experimentalDecorators": true
     },
     "include": [
         "src/**/*"
