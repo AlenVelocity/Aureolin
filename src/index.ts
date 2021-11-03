@@ -26,4 +26,4 @@ export * from './Exception'
 export * from './HttpStatus'
 export { Config } from './config'
 
-export { h, Fragment } from 'nano-jsx'
+export { h, Fragment, renderSSR } from 'nano-jsx'
