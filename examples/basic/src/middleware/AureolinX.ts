@@ -1,6 +1,6 @@
 import { Context, NextFunction } from 'aureolin'
 
-export const Aureolin = () => {
+export const AureolinX = () => {
     return async (ctx: Context, next: NextFunction) => {
         ctx.res.setHeader('X-Aureolin', 'Aureolin')
         // eslint-disable-next-line @typescript-eslint/no-var-requires

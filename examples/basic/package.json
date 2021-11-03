@@ -30,6 +30,6 @@
     "typescript": "^4.4.4"
   },
   "dependencies": {
-    "aureolin": "github:alensaito1/aureolin#config-init"
+    "aureolin": "github:alensaito1/aureolin#migrate-preact"
   }
 }

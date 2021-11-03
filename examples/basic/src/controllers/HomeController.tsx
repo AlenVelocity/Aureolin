@@ -1,27 +1,35 @@
-import { Response } from 'koa'
-import { React, Body, Controller, BadGatewayException, Get, Header, Inject, Post, Res, ControllerMiddleware } from 'aureolin'
-import { Aureolin } from '../middleware/Aureolin'
+import { h, Body, Controller, BadGatewayException, Get, Header, Inject, Post, Res, ControllerMiddleware, Context } from 'aureolin'
+import Aureolin from '../components/Aureolin'
+import { AureolinX } from '../middleware/AureolinX'
 import type PackageProvider from '../providers/PackageProvider'
 import type TimeProvider from '../providers/TimeProvider'
 
 @Controller('/')
-@ControllerMiddleware([Aureolin()])
+@ControllerMiddleware([AureolinX()])
 export default class HomeController {
     constructor(@Inject('time') public tm: TimeProvider, @Inject('package') public pkg: PackageProvider) {}
 
     @Get('/')
-    public index(): any {
-        return (<div>
-            <h1>Welcome to Aureolin!</h1>
-            <p>
-                Aureolin is a Fast, Simple, and Flexible Framework for Node.js
-            </p>
-            <p>
-                <a href="https://www.npmjs.com/package/aureolin">
-                    https://www.npmjs.com/package/aureolin
-                </a>
-            </p>
-            </div>)
+    public index(): JSX.Element {
+       return <Aureolin />
+    }
+
+    @Get('yes')
+    public yes(): JSX.Element {
+        return (
+            <div>
+                <h1>No</h1>
+            </div>
+        )
+    }
+
+    @Get('no')
+    public no(): JSX.Element {
+        return (
+            <div>
+                <h1>Yes</h1>
+            </div>
+        )
     }
 
     @Get('about')
@@ -48,7 +56,7 @@ export default class HomeController {
     }
 
     @Get('res')
-    public res(@Res() res: Response): typeof res {
+    public res(@Res() res: Context['response']): typeof res {
         return res
     }
 
