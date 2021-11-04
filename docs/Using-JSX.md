@@ -22,9 +22,15 @@ Then,
 
 After that, you can use JSX in your controller.
 
+
+# Example:
+
+> HINT: Axios is used for data fetching in this example.
+
 ```TSX
 /** @filename src/controllers/HomeController.tsx */
 import { h, Controller, Get } from 'aureolin'
+import axios from 'axios'
 
 @Controller('/')
 export class HomeController {
@@ -32,5 +38,14 @@ export class HomeController {
   async index() {
     return <div>Hello, world!</div>
   }
+
+  @Get('/followers/:name')
+  public async followers(@Param('name') name: string) {
+    // TRUE SSR
+    const { data } = await axios.get(`https://api.github.com/users/${name}/followers`)
+    return <div>{data.map(follower => <div>{follower.login}</div>)}</div>
+  }
+
+
 }
 
