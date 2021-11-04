@@ -1,4 +1,5 @@
 import { h, Body, Controller, BadGatewayException, Get, Header, Inject, Post, Res, ControllerMiddleware, Context } from 'aureolin'
+import axios from 'axios'
 import Aureolin from '../components/Aureolin'
 import { AureolinX } from '../middleware/AureolinX'
 import type PackageProvider from '../providers/PackageProvider'
@@ -10,8 +11,9 @@ export default class HomeController {
     constructor(@Inject('time') public tm: TimeProvider, @Inject('package') public pkg: PackageProvider) {}
 
     @Get('/')
-    public index(): JSX.Element {
-       return <Aureolin />
+    public async index(): Promise<JSX.Element> {
+        const  { data: { stargazers_count: stars }} = await axios.get('https://api.github.com/repos/Alensaito1/Aureolin')
+        return <Aureolin stars={stars}/>
     }
 
     @Get('yes')
