@@ -4,7 +4,7 @@
 **Aureolin** is a simple, fast, and powerful REST API framework for Node.js with a focus on simplicity and performance. Built With [Koa](https://github.com/koajs/koa)
 
 [![NPM](https://img.shields.io/badge/Available%20On-NPM-lightgrey.svg?logo=npm&logoColor=339933&labelColor=white&style=flat-square)](https://npmjs.com/package/aureolin)
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FAlenSaito1%2FAureolin.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FAlenSaito1%2FAureolin?ref=badge_shield)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FAlenSaito1%2FAureolin.svg?type=small)](https://app.fossa.com/projects/git%2Bgithub.com%2FAlenSaito1%2FAureolin?ref=badge_small)
 
 [![NPM](https://img.shields.io/npm/l/aureolin?style=flat-square&label=License)](https://github.com/AlenSaito1/Aureolin/blob/master/LICENSE) [![Discord](https://img.shields.io/discord/898177582829285387?label=Discord&style=flat-square)](https://discord.gg/3Pg2Nw2vjn) [![CodeFactor](https://img.shields.io/codefactor/grade/github/alensaito1/aureolin?style=flat-square&label=Code%20Quality)](https://www.codefactor.io/repository/github/alensaito1/aureolin) [![NPM](https://img.shields.io/npm/dw/aureolin?style=flat-square&label=Downloads)](https://npmjs.com/package/aureolin)[![Prettier](https://img.shields.io/badge/Code_Style-Prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
