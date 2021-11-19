@@ -43,7 +43,7 @@
     "@types/koa__router": "8.0.9",
     "@types/koa-bodyparser": "4.3.4",
     "@types/mocha": "9.0.0",
-    "@types/node": "16.11.7",
+    "@types/node": "16.11.9",
     "@types/pino": "6.3.12",
     "@typescript-eslint/eslint-plugin": "5.3.1",
     "@typescript-eslint/parser": "5.3.1",
