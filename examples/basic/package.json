@@ -31,6 +31,7 @@
   },
   "dependencies": {
     "aureolin": "github:alensaito1/aureolin",
-    "axios": "^0.24.0"
+    "axios": "^0.24.0",
+    "handlebars": "^4.7.7"
   }
 }
