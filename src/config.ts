@@ -112,12 +112,12 @@ export const loadConfig = (): Config => {
     const path = join(process.cwd(), 'aureolin.config.js')
     if (!existsSync(path)) throw new Error('Config file not found')
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const config = require(path) as Partial<Config>
+    const { port = 3000, root = join(process.cwd(), 'src'), logger, views, public: pub } = require(path) as Partial<Config>
     return {
-        port: config.port ?? 3000,
-        root: config.root ?? join(process.cwd(), 'src'),
-        logger: config.logger,
-        public: config.public,
-        views: config.views
+        port,
+        root,
+        logger,
+        views,
+        public: pub,
     }
 }
