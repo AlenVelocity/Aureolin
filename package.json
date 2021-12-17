@@ -46,7 +46,7 @@
     "@types/koa-static": "^4.0.2",
     "@types/mocha": "9.0.0",
     "@types/node": "16.11.14",
-    "@types/pino": "6.3.12",
+    "@types/pino": "7.0.4",
     "@typescript-eslint/eslint-plugin": "5.7.0",
     "@typescript-eslint/parser": "5.7.0",
     "eslint": "8.3.0",
@@ -64,7 +64,7 @@
     "koa-mount": "^4.0.0",
     "koa-static": "^5.0.0",
     "koa-views": "^8.0.0",
-    "pino": "^6.13.3",
+    "pino": "^7.0.0",
     "pino-pretty": "^7.0.1",
     "preact": "^10.5.15",
     "preact-render-to-string": "^5.1.19"
