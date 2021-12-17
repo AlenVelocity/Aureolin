@@ -1,7 +1,7 @@
 <div align=center>
 
 # Aureolin
-**Aureolin** is a simple, fast, and powerful REST API framework for Node.js with a focus on simplicity and performance. Built With [Koa](https://github.com/koajs/koa)
+**Aureolin** is a simple, fast, and powerful MVC framework for Node.js with a focus on simplicity and performance. Built With [Koa](https://github.com/koajs/koa)
 
 [![NPM](https://img.shields.io/badge/Available%20On-NPM-lightgrey.svg?logo=npm&logoColor=339933&labelColor=white&style=flat-square)](https://npmjs.com/package/aureolin)
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FAlenSaito1%2FAureolin.svg?type=small)](https://app.fossa.com/projects/git%2Bgithub.com%2FAlenSaito1%2FAureolin?ref=badge_small)
@@ -31,7 +31,19 @@ const { join } = require('path')
 /** @type {import('aureolin').Config} */
 module.exports = {
     root: join(process.cwd(), process.env.NODE_ENV === 'production' ? 'dist' : 'src')
-    port: 4000
+    port: 4000,
+    public: {
+        path: '/public',
+        dir: './public',
+        index: 'index.html'
+    },
+    views: {
+        path: 'views',
+        extension: 'hbs',
+        map: { 
+            hbs: 'handlebars' 
+        }
+    }
 }
 ```
 
@@ -199,6 +211,8 @@ main()
 ```
 
 After you have created the application, Visit ```http://localhost:3000/hello``` to see the output of the `hello` controller.
+
+Check out the [Docs Folder](https://github.com/alensaito1/aureolin/tree/master/docs) for more information.
 
 
 ## Key Features
