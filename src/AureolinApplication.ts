@@ -109,7 +109,7 @@ export class AureolinApplication extends Emitter {
         })
 
         if (this.options.public) {
-            const { path = '/public', dir = './public', options } = this.options.public
+            const { path = '/public', dir = './public', ...options } = this.options.public
             this.router.use(path, serve(dir, options))
         }
 
