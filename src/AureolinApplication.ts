@@ -116,7 +116,7 @@ export class AureolinApplication extends Emitter {
 
         if (this.options.views) {
             const { path = 'views', ...options } = this.options.views
-            this.router.use(views(path, options))
+            this.router.use(views(path, Object.assign(options, { autoRender: true })))
         }
 
         for (const [controller, { path }] of endpointStore.getControllers()) {

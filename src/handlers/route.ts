@@ -25,7 +25,8 @@ export const handleRoute = (
             if (res) {
                 if (isValidElement(res)) res = render(res)
                 if (view) {
-                    return void context.render(view.template, Object.assign(view.metadata ?? {}, res))
+                    context.state = Object.assign(view.metadata ?? {}, res)
+                    return void (await context.render(view.template))
                 }
                 context.body = res
             }
