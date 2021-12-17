@@ -108,4 +108,3 @@ export const Render = (template: string, metadata: Record<string, string | undef
         })
     }
 }
-

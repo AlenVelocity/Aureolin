@@ -69,7 +69,6 @@ class EndpointStore implements Iterable<EndpointDefinition> {
     public getView = (controller: string, key: string): IRouteView | undefined => {
         return this.views.get(`${controller}-${key}`)
     }
-
 }
 
 const endpointStore = new EndpointStore()
