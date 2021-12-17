@@ -3,12 +3,14 @@ import { existsSync } from 'fs'
 import Application from 'koa'
 import { handleRoute } from './handlers/route'
 import endpointStore from './store/endpoints'
-import { CreateOptions, Methods } from './types'
+import { Methods } from './types'
 import { readdirRecursive } from './utils'
 import Emitter from './Emitter'
 import logger from 'pino'
 import middlewareStore from './store/middleware'
 import bodyParser from 'koa-bodyparser'
+import { Config } from './config'
+import serve from 'koa-static'
 /**
  * The Aureolin Application class.
  * @class
@@ -63,7 +65,7 @@ export class AureolinApplication extends Emitter {
      * @memberof AureolinApplication
      * @constructor
      */
-    constructor(private options: CreateOptions) {
+    constructor(private options: Config) {
         super()
 
         for (const method of ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'HEAD', 'OPTIONS']) {
@@ -105,6 +107,12 @@ export class AureolinApplication extends Emitter {
             this.logger.info(`Request ${ctx.request.method} ${ctx.request.url}`)
             await next()
         })
+
+        if (this.options.public) {
+            const { path = '/public', dir = './public', options } = this.options.public
+            this.router.use(path, serve(dir, options))
+        }
+
         for (const [controller, { path }] of endpointStore.getControllers()) {
             const middlewares = middlewareStore.getControllerMiddleware(controller)
             for (const middleware of middlewares.flat()) {
@@ -200,8 +208,8 @@ export class AureolinApplication extends Emitter {
 
     /**
      * Creates a new instance of AureolinApplication
-     * @param {CreateOptions} options - Options for the application
+     * @param {Config} options - Options for the application
      * @returns {AureolinApplication} - New instance of AureolinApplication
      */
-    public static create = (options: CreateOptions): AureolinApplication => new AureolinApplication(options)
+    public static create = (options: Config): AureolinApplication => new AureolinApplication(options)
 }
