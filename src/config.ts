@@ -40,11 +40,6 @@ export type Config = {
          * Path to map to the public directory
          */
         path?: string
-
-        /**
-         * Serve options
-         */
-        options?: {
             /**
              * Browser cache max-age in milliseconds. defaults to 0
              * @type {number}
@@ -91,7 +86,7 @@ export type Config = {
              * ['.html', '.htm']
              */
             extensions?: string[]
-        }
+
     }
 
     views?: {
@@ -120,6 +115,9 @@ export const loadConfig = (): Config => {
     const config = require(path) as Partial<Config>
     return {
         port: config.port ?? 3000,
-        root: config.root ?? join(process.cwd(), 'src')
+        root: config.root ?? join(process.cwd(), 'src'),
+        logger: config.logger,
+        public: config.public,
+        views: config.views
     }
 }
