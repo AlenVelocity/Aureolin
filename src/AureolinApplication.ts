@@ -10,6 +10,7 @@ import logger from 'pino'
 import middlewareStore from './store/middleware'
 import bodyParser from 'koa-bodyparser'
 import { Config } from './config'
+import mount from 'koa-mount'
 import serve from 'koa-static'
 import views from 'koa-views'
 /**
@@ -110,8 +111,8 @@ export class AureolinApplication extends Emitter {
         })
 
         if (this.options.public) {
-            const { dir = './public', ...options } = this.options.public
-            this.router.use(serve(dir, options))
+            const { path = '/public', dir = './public', ...options } = this.options.public
+            this.router.use(mount(path, serve(dir, options)))
         }
 
         if (this.options.views) {
