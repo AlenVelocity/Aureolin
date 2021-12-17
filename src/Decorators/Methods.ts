@@ -97,3 +97,15 @@ export const Head = (path: string): MethodDecorator => {
         })
     }
 }
+
+export const Render = (template: string, metadata: Record<string, string | undefined> = {}): MethodDecorator => {
+    return (target: any, propertyKey: string | symbol) => {
+        endpointStore.registerMethodView({
+            template,
+            propertyKey: propertyKey.toString(),
+            controller: target.constructor.name,
+            metadata
+        })
+    }
+}
+

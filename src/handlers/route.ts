@@ -2,6 +2,7 @@ import { Middleware } from 'koa'
 import { isValidElement } from 'preact'
 import render from 'preact-render-to-string'
 import { Exception } from '..'
+import endpointStore from '../store/endpoints'
 import paramStore from '../store/param'
 import { Context } from '../types'
 import { getParam } from './param'
@@ -16,12 +17,16 @@ export const handleRoute = (
         propertyKey
     })
     const sortedParams = params.sort((a, b) => a.index - b.index)
+    const view = endpointStore.getView(controller, propertyKey)
     return async (context: Context): Promise<void> => {
         try {
             const args = sortedParams.map((param) => getParam(context, param.type, param.meta))
             let res = await cb(...args)
             if (res) {
                 if (isValidElement(res)) res = render(res)
+                if (view) {
+                    return void context.render(view.template, Object.assign(view.metadata ?? {}, res))
+                }
                 context.body = res
             }
         } catch (err) {

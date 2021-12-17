@@ -11,6 +11,7 @@ import middlewareStore from './store/middleware'
 import bodyParser from 'koa-bodyparser'
 import { Config } from './config'
 import serve from 'koa-static'
+import views from 'koa-views'
 /**
  * The Aureolin Application class.
  * @class
@@ -111,6 +112,11 @@ export class AureolinApplication extends Emitter {
         if (this.options.public) {
             const { dir = './public', ...options } = this.options.public
             this.router.use(serve(dir, options))
+        }
+
+        if (this.options.views) {
+            const { path = 'views', ...options } = this.options.views
+            this.router.use(views(path, options))
         }
 
         for (const [controller, { path }] of endpointStore.getControllers()) {

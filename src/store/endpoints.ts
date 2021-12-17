@@ -1,3 +1,4 @@
+import { IRouteView } from '..'
 import { ControllerDefinition, EndpointDefinition } from '../types'
 import providerStore from './provider'
 
@@ -5,6 +6,7 @@ class EndpointStore implements Iterable<EndpointDefinition> {
     private readonly controllers = new Map<string, ControllerDefinition>()
     private readonly list = new Map<string, EndpointDefinition>()
     private readonly renders = new Set<{ controller: string; method: string }>()
+    private readonly views = new Map<string, IRouteView>()
 
     public registerEndpoint = (definition: EndpointDefinition) => {
         const key = `${definition.controller}-${definition.propertyKey}`
@@ -59,6 +61,15 @@ class EndpointStore implements Iterable<EndpointDefinition> {
             method
         })
     }
+
+    public registerMethodView = (view: IRouteView) => {
+        this.views.set(`${view.controller}-${view.propertyKey}`, view)
+    }
+
+    public getView = (controller: string, key: string): IRouteView | undefined => {
+        return this.views.get(`${controller}-${key}`)
+    }
+
 }
 
 const endpointStore = new EndpointStore()

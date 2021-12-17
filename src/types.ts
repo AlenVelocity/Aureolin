@@ -244,4 +244,11 @@ export interface AureolinEventEmitter extends EventEmitter {
     removeallListeners<K extends keyof EventsMap>(event: K): this
     emit<K extends keyof EventsMap>(event: K, arg?: EventsMap[K]): boolean
 }
+
+export interface IRouteView {
+    controller: string
+    propertyKey: string
+    template: string
+    metadata?: Record<string, unknown>
+}
 export { Next as NextFunction, Middleware as MiddlewareFunction } from 'koa'

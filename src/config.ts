@@ -95,13 +95,8 @@ export type Config = {
          * @type {string}
          * @default process.cwd() + '/views'
          */
-        dir?: string
-        /**
-         * Engine to use for views
-         * @type {string}
-         */
-        engine?: { render: (path: string, data: unknown) => Promise<string> | string } | string | unknown
-    }
+        path?: string
+    } & Parameters<typeof import('koa-views')>[1]
 }
 
 /**
