@@ -58,7 +58,7 @@
   },
   "dependencies": {
     "@koa/router": "^10.1.1",
-    "axios": "^0.24.0",
+    "axios": "^0.27.0",
     "koa": "^2.13.3",
     "koa-bodyparser": "^4.3.0",
     "koa-mount": "^4.0.0",
